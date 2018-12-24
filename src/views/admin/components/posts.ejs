@@ -1,0 +1,44 @@
+<div class="admin-posts">
+  <a class="ui primary button" href="/admin/posts/create">发布文章</a>
+  <table class="ui very basic table">
+    <thead>
+      <tr>
+        <th>标题</th>
+        <th>发布时间</th>
+        <th>更新时间</th>
+        <th>浏览</th>
+        <th>留言</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% data.forEach(function (post) { %>
+      <tr>
+        <td>
+          <%- post.title %>
+        </td>
+        <td>
+          <%- post.ct %>
+        </td>
+        <td>
+          <%- post.ut %>
+        </td>
+        <td>
+          <%- post.pv %>
+        </td>
+        <td>
+          <%- post.commentsCount %>
+        </td>
+        <td>
+          <a class="ui primary button" href="/admin/posts/<%= post._id %>/edit">
+            编辑
+          </a>
+          <a class="ui red button" href="/admin/posts/<%= post._id %>/delete">
+            删除
+          </a>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

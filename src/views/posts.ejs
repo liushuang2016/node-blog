@@ -1,0 +1,9 @@
+<%- include('header') %>
+
+<div class="post-list g-container">
+  <% posts.forEach(function (post) { %>
+  <%- include('components/post-item', { post: post }) %>
+  <% }) %>
+</div>
+
+<%- include('footer') %>

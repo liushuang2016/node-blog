@@ -1,0 +1,12 @@
+<%- include('components/admin-header') %>
+
+<div class="ui grid admin-body">
+  <div class="four wide column">
+    <%- include('components/nav-left', { render: render }) %>
+  </div>
+  <div class="twelve wide stretched column">
+    <%- include('components/'+render, { data: data }) %>
+  </div>
+</div>
+
+<%- include('../footer') %>

@@ -1,0 +1,30 @@
+<div class="post-item">
+  <a href="/posts/<%= post._id %>">
+    <h2 class="post-title">
+      <%= post.title %>
+    </h2>
+  </a>
+  <div class="post-date">
+    <i class="iconfont icon-shizhong"></i>
+    <%= post.ct %>
+  </div>
+  <p class="post-excerpt">
+    <%- post.excerpt %>
+  </p>
+  <div class="post-meta">
+    <div class="post-tags">
+      <a href="/tags.html#前端开发" class="post-tag">前端开发</a>
+      <a href="/tags.html#vue" class="post-tag">vue</a>
+    </div>
+    <div class="post-info">
+      <span>
+        浏览
+        <%= post.pv || 0 %>
+      </span>
+      <span>
+        留言
+        <%= post.commentsCount || 0 %>
+      </span>
+    </div>
+  </div>
+</div>

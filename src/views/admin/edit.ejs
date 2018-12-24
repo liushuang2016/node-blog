@@ -1,0 +1,23 @@
+<%- include('components/admin-header') %>
+
+<div class="ui grid admin-content">
+  <div class="wide column g-container">
+    <form class="ui form segment" method="post" action="/admin/posts/<%= post._id %>/edit">
+      <div class="field required">
+        <label>标题</label>
+        <input type="text" name="title" value="<%= post.title %>">
+      </div>
+      <div class="field required">
+        <label>tags(tag间用空格分割)</label>
+        <input type="text" name="tags" value="<%= post.tags %>">
+      </div>
+      <div class="field required">
+        <label>内容</label>
+        <textarea name="content" rows="15"><%= post.content %></textarea>
+      </div>
+      <input type="submit" class="ui button" value="发布">
+    </form>
+  </div>
+</div>
+
+<%- include('../footer') %>
