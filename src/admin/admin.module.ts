@@ -1,9 +1,8 @@
-import { AdminGuard } from 'src/common/guard/admin.guard';
 import { Module } from "@nestjs/common";
 import { PostAdminController } from "src/admin/controller/post.controller";
-import { APP_GUARD } from "@nestjs/core";
+import { UserAdminController } from "src/admin/controller/user.controller";
 
 @Module({
-  controllers: [PostAdminController]
+  controllers: [PostAdminController, UserAdminController]
 })
 export class AdminModule { }

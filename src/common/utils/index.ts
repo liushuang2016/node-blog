@@ -1,4 +1,5 @@
 export const format = (time: any, template = 'YY-MM-DD hh:mm'): string => {
+  time = time ? time : Date.now()
   const date = new Date(time)
   const year = String(date.getFullYear())
   const month = String(date.getMonth() + 1)

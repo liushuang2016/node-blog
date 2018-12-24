@@ -1,0 +1,40 @@
+<div class="admin-users">
+  <table class="ui very basic table">
+    <thead>
+      <tr>
+        <th>用户名</th>
+        <th>注册时间</th>
+        <th>ip</th>
+        <th>密码</th>
+        <th>留言数</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% data.forEach(function (user) { %>
+      <tr>
+        <td>
+          <%- user.name %>
+        </td>
+        <td>
+          <%- user.ct %>
+        </td>
+        <td>
+          <%- user.ip %>
+        </td>
+        <td>
+          <%- user.password %>
+        </td>
+        <td>
+          <%- user.commentsCount %>
+        </td>
+        <td>
+          <a class="ui red button" href="/admin/user/<%= user._id %>/delete">
+            删除
+          </a>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

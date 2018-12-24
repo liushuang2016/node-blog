@@ -8,8 +8,8 @@ const PostSchema = new Schema({
   content: { type: String, required: true },
   pv: { type: Number, default: 0 },
   tags: { type: Array, required: true },
-  ct: { type: Date, default: Date.now },
-  ut: { type: Date, default: Date.now },
+  ct: { type: Date, default: Date.now() },
+  ut: { type: Date, default: Date.now() },
   _delete: { type: Boolean, default: false }
 })
 

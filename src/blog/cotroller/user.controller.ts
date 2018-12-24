@@ -36,7 +36,8 @@ export class UserController {
     if (!user) {
       let user = new User({
         name: login.name,
-        password: sha1(login.password)
+        password: sha1(login.password),
+        ip: req.ip
       })
       user = await user.save()
       req.flash('success', '注册成功')
