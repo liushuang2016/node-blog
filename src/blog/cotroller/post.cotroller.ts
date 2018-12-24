@@ -3,7 +3,7 @@ import { Response } from "express";
 import { PostService } from "src/common/service/post.service";
 
 @Controller()
-export class PostsController {
+export class PostController {
   constructor(private readonly postService: PostService) { }
 
   @Get()

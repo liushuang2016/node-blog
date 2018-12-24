@@ -7,7 +7,8 @@ export class AnyExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
     const request = ctx.getRequest();
-    const arr = [403, 404]
+    // 不计入日志的错误码
+    const arr = [403, 404, 444]
 
     if (arr.indexOf(exception.status) < 0) {
       logger.error(exception)
@@ -20,6 +21,8 @@ export class AnyExceptionFilter implements ExceptionFilter {
       request.flash('error', exception.message.message)
       response.redirect('back')
     } else {
+      console.log(exception);
+
       request.flash('error', exception.message.message)
       response.redirect('/posts')
     }
