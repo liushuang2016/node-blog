@@ -1,6 +1,7 @@
 import { PipeTransform, BadRequestException, ArgumentMetadata, Injectable } from '@nestjs/common';
 import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
+import { DtoException } from 'src/common/exception/dto.exception';
 
 @Injectable()
 export class ValidationPipe implements PipeTransform<any> {
@@ -14,7 +15,10 @@ export class ValidationPipe implements PipeTransform<any> {
     const object = plainToClass(metatype, value);
     const errors = await validate(object);
     if (errors.length > 0) {
-      throw new BadRequestException('Validation failed');
+      // constraints：object 保存着自定义的错误消息
+      // 得到第一个错误的key
+      const messageKey = Object.keys(errors[0].constraints)[0]
+      throw new DtoException(errors[0].constraints[messageKey])
     }
     return value;
   }

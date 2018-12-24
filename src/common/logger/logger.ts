@@ -6,7 +6,7 @@ const logpath = (name: string): string => {
 }
 
 export const logger = createLogger({
-  format: format.simple(),
+  format: format.json(),
   transports: [
     // new transports.Console(),
     new transports.File({ filename: logpath('error.log'), level: 'error' }),

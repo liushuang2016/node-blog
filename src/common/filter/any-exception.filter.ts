@@ -7,9 +7,22 @@ export class AnyExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
     const request = ctx.getRequest();
+    const arr = [403, 404]
 
-    logger.error(exception)
-    request.flash(exception.message)
-    response.redirect('/posts')
+    if (arr.indexOf(exception.status) < 0) {
+      logger.error(exception)
+      console.log(exception)
+    }
+
+    if (exception.status === 404) {
+      response.render('404')
+    } else if (exception.status === 444) {
+      request.flash('error', exception.message.message)
+      response.redirect('back')
+    } else {
+      request.flash('error', exception.message.message)
+      response.redirect('/posts')
+    }
+
   }
 }

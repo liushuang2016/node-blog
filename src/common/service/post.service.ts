@@ -3,6 +3,7 @@ import * as marked from "marked";
 import { Comment } from "src/model/Comment";
 import { format } from "src/common/utils";
 import { Post } from "src/model/Post";
+import { GlobalService } from "src/common/service/global.service";
 
 @Injectable()
 export class PostService {
@@ -44,7 +45,10 @@ export class PostService {
   }
 
   // 获取所有文章
-  async getPosts() {
+  async getPosts(update = false) {
+    if (GlobalService.get('posts') && !update) {
+      return GlobalService.get('posts')
+    }
     let posts = await Post.find({ _delete: false })
     let promisePosts = posts.map(async post => {
       post = post.toObject()
@@ -55,7 +59,9 @@ export class PostService {
       post['ut'] = format(post['ut'])
       return post
     })
-    return Promise.all(promisePosts)
+    posts = await Promise.all(promisePosts)
+    GlobalService.set('posts', posts)
+    return posts
   }
 
   // 删除文章
