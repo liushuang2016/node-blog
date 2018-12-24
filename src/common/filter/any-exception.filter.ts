@@ -7,12 +7,7 @@ export class AnyExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse();
     const request = ctx.getRequest();
 
-    response
-      .status(exception.getStatus())
-      .json({
-        statusCode: exception.getStatus(),
-        timestamp: new Date().toISOString(),
-        path: request.url,
-      });
+    request.flash(exception.message)
+    response.redirect('/posts')
   }
 }

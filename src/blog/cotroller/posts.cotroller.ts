@@ -6,10 +6,10 @@ import { Response } from "express";
 export class PostsController {
   @Get()
   index(@Res() res: Response) {
-    return res.redirect('/')
+    return res.redirect('/posts')
   }
 
-  @Get()
+  @Get('posts')
   @Render('posts')
   posts() {
     return { posts: [] }
