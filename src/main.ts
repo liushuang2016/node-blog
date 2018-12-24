@@ -8,6 +8,7 @@ import * as flash from "connect-flash";
 import * as session from "express-session";
 import * as config from "config";
 import * as MongoStore from "connect-mongo";
+import * as mongoose from "mongoose";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -19,6 +20,12 @@ async function bootstrap() {
   app.useStaticAssets(__dirname + '/public')
   app.setBaseViewsDir(__dirname + '/views')
   app.setViewEngine('ejs')
+
+  // 连接mongo
+  mongoose.connect(config.get('mongodb'), {
+    useNewUrlParser: true,
+    useCreateIndex: true
+  })
 
   app.use(flash())
   // session 中间件

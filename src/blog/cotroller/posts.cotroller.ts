@@ -1,9 +1,11 @@
 import { Controller, Get, Res, Render } from "@nestjs/common";
 import { Response } from "express";
-
+import { PostService } from "src/common/service/post.service";
 
 @Controller()
 export class PostsController {
+  constructor(private readonly postService: PostService) { }
+
   @Get()
   index(@Res() res: Response) {
     return res.redirect('/posts')
@@ -11,7 +13,8 @@ export class PostsController {
 
   @Get('posts')
   @Render('posts')
-  posts() {
-    return { posts: [] }
+  async posts() {
+    const posts = await this.postService.getPosts()
+    return { posts }
   }
 }
