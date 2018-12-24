@@ -10,7 +10,7 @@ export class AnyExceptionFilter implements ExceptionFilter {
     // 不计入日志的错误码
     const arr = [403, 404, 444]
 
-    if (arr.indexOf(exception.status) < 0) {
+    if (arr.indexOf(exception.status) === -1) {
       logger.error(exception)
       console.log(exception)
     }

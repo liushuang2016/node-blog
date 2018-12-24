@@ -22,4 +22,10 @@ export class PostAdminController {
       render: 'posts'
     }
   }
+
+  @Get('/posts/create')
+  @Render('admin/create')
+  async createPage() {
+    return {}
+  }
 }
