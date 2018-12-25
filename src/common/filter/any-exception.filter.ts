@@ -21,9 +21,9 @@ export class AnyExceptionFilter implements ExceptionFilter {
       request.flash('error', exception.message.message)
       response.redirect('back')
     } else {
-      console.log(exception);
-
-      request.flash('error', exception.message.message)
+      const message = exception.message ?
+        exception.message.message : exception.ValidationError
+      request.flash('error', message)
       response.redirect('/posts')
     }
 

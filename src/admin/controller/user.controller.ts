@@ -1,7 +1,9 @@
 import { UserService } from 'src/common/service/user.service';
-import { Controller, Get, Render } from "@nestjs/common";
+import { Controller, Get, Render, UseGuards } from "@nestjs/common";
+import { AdminGuard } from 'src/common/guard/admin.guard';
 
 @Controller('admin/users')
+@UseGuards(AdminGuard)
 export class UserAdminController {
   constructor(private readonly userService: UserService) { }
 
