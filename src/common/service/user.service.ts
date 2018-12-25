@@ -16,4 +16,14 @@ export class UserService {
     })
     return Promise.all(promiseUsers)
   }
+
+  // 根据id删除user
+  async delUserById(id: any) {
+    try {
+      await User.deleteOne({ _id: id })
+      return true
+    } catch (e) {
+      throw new Error('用户不存在')
+    }
+  }
 }
