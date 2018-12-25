@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
   ip: { type: String, required: true },
   avatar: { type: String, default: 'default.jpg' },
   role: { type: Number, default: 10 },
-  ct: { type: Date, default: Date.now() }
+  ct: { type: Date, default: Date.now }
 })
 
 export const User = mongoose.model('user', UserSchema)

@@ -19,6 +19,7 @@ export class PostService {
       posts['commentsCount'] = await Comment.countDocuments({ postId: posts._id })
       // pv + 1, 如果不await则函数返回后，异步操作会失败
       await Post.updateOne({ _id: posts._id }, { $inc: { pv: 1 } })
+      posts['pv'] += 1
       posts['content'] = marked(posts['content'])
       posts['ct'] = format(posts['ct'])
       posts['ut'] = format(posts['ut'])
