@@ -1,4 +1,3 @@
-import { Post as PostModel } from 'src/model/Post';
 import { TagService } from 'src/common/service/tag.service';
 import { AdminGuard } from 'src/common/guard/admin.guard';
 import { PostService } from 'src/common/service/post.service';
@@ -109,5 +108,20 @@ export class PostAdminController {
       req.flash('error', e.message)
       return res.redirect('back')
     }
+  }
+
+  // 删除文章
+  @Get('/posts/:postId/delete')
+  async deletePost(@Param() param, @Res() res: Response, @Req() req: any) {
+    const postId = param.postId
+    try {
+      await this.postService.delPostById(postId)
+      // 更新 getposts
+      await this.postService.getPosts(true)
+      req.flash('success', '删除成功')
+    } catch (e) {
+      req.flash('error', e.message)
+    }
+    res.redirect('/admin/posts')
   }
 }

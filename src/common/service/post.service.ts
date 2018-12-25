@@ -67,10 +67,10 @@ export class PostService {
   // 删除文章
   async delPostById(id: any) {
     try {
-      await Post.updateOne({ _id: id }, { _delete: false })
+      await Post.updateOne({ _id: id }, { _delete: true })
       return true
     } catch (e) {
-      return false
+      throw new Error('文章不存在')
     }
   }
 
