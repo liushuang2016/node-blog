@@ -28,6 +28,8 @@ export class PostController {
 
     try {
       const post = await this.postService.findByIdToHtml(postId)
+      // 更新getPosts
+      this.postService.getPosts(true)
       return { post }
     } catch (e) {
       throw e

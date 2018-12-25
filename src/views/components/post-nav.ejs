@@ -6,19 +6,30 @@
     <a class="item float-right" href="/login">About</a>
     <a class="item float-right" href="/register">Tags</a>
   </div>
-  <div class="nav-center animated fadeIn">
+  <div class="nav-center">
     <div class="tags">
       <% post.tags.forEach(tag => { %>
-      <div class="post-tag">
+      <a href="/posts?tags=<%= tag %>" class="post-tag">
         <%= tag %>
-      </div>
+      </a>
       <% }) %>
     </div>
     <div class="site-title">
       <%= post.title %>
     </div>
     <div class="info">
-
+      <div class="icon-item">
+        <i class="iconfont icon-eye4"></i>
+        <%= post.pv %>
+      </div>
+      <div class="icon-item">
+        <i class="iconfont icon-liuyan1"></i>
+        <%= post.commentsCount %>
+      </div>
+      <div class="icon-item">
+        <i class="iconfont icon-shizhong"></i>
+        <%= post.ut %>
+      </div>
     </div>
   </div>
 </div>

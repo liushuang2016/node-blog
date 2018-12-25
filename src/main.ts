@@ -9,11 +9,13 @@ import * as session from "express-session";
 import * as config from "config";
 import * as MongoStore from "connect-mongo";
 import * as mongoose from "mongoose";
+import { limiter } from 'src/common/middleware/limit.middleware';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: new MyLogger()
   })
+  app.use(limiter)
   // logger 打印
   app.use(morgan('dev'))
   // 设置模板引擎为 ejs

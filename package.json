@@ -30,6 +30,7 @@
     "connect-flash": "^0.1.1",
     "connect-mongo": "^2.0.3",
     "ejs": "^2.6.1",
+    "express-rate-limit": "^3.3.2",
     "express-session": "^1.15.6",
     "marked": "^0.5.2",
     "mongoose": "^5.4.0",

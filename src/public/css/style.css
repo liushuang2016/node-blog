@@ -74,6 +74,16 @@ p {
 .bg-gray {
   background-color: #f7f8fa;
 }
+
+.icon-item {
+  display: inline-block;
+  font-size: 16px;
+  margin-right: 8px;
+}
+
+.icon-item .iconfont {
+  font-size: 18px;
+}
 /* ---------- nav ---------- */
 
 .header-nav, .header-nav-post {
@@ -86,6 +96,7 @@ p {
   background-position: center;
   color: #eee;
   box-shadow: 0 4px 20px rgba(0,38,55,.16);
+  background-color: #1494fb
 }
 
 .header-nav-post {
@@ -141,6 +152,12 @@ p {
   color: #fff;
 }
 
+.header-nav-post .site-title {
+  line-height: 1.4;
+  font-weight: bold;
+  margin: 24px 0;
+}
+
 .site-social-icons {
   text-align: center;
   padding: 8px 0;
@@ -155,10 +172,6 @@ p {
 
 .social-icon .iconfont:hover {
   color: #fff;
-}
-
-.ui.message {
-  margin-bottom: 20px !important;
 }
 
 /* ---------- post-content ---------- */
