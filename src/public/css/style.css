@@ -41,9 +41,27 @@ p {
   float: right!important;
 }
 
+.form-container {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 16px;
+}
+
+.margin-tb {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.alert-container {
+  max-width: 960px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 /* ---------- nav ---------- */
 
-.nav {
+.header-nav {
   position: relative;
   display: flex;
   margin-bottom: 20px;
@@ -63,7 +81,7 @@ p {
   padding: 16px 36px;
 }
 
-.nav .item {
+.header-nav .item {
   display: block;
   height: 100%;
   float: left;
@@ -73,17 +91,17 @@ p {
   font-size: 14px;
 }
 
-.nav .header {
+.header-nav .header {
   font-size: 18px;
   font-weight: bold;
 }
 
-.nav .item:hover {
+.header-nav .item:hover {
   border-bottom: 0;
   color: #fff;
 }
 
-.nav .item+.item:hover {
+.header-nav .item+.item:hover {
   border-bottom: 3px solid #eee;
 }
 

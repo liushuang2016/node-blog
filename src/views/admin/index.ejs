@@ -1,11 +1,13 @@
 <%- include('components/admin-header') %>
 
-<div class="ui grid admin-body">
-  <div class="four wide column">
-    <%- include('components/nav-left', { render: render }) %>
-  </div>
-  <div class="twelve wide stretched column">
-    <%- include('components/'+render, { data: data }) %>
+<div class="container-fluid admin-body">
+  <div class="row">
+    <div class="col-md-2">
+      <%- include('components/nav-left', { render: render }) %>
+    </div>
+    <div class="col-md-10">
+      <%- include('components/'+render, { data: data }) %>
+    </div>
   </div>
 </div>
 

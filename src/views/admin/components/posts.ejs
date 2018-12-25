@@ -1,6 +1,6 @@
 <div class="admin-posts">
-  <a class="ui primary button" href="/admin/posts/create">发布文章</a>
-  <table class="ui very basic table">
+  <a class="btn btn-success" href="/admin/posts/create">发布文章</a>
+  <table class="table table table-hover">
     <thead>
       <tr>
         <th>标题</th>
@@ -30,10 +30,10 @@
           <%- post.commentsCount %>
         </td>
         <td>
-          <a class="ui primary button" href="/admin/posts/<%= post._id %>/edit">
+          <a class="btn btn-primary" href="/admin/posts/<%= post._id %>/edit">
             编辑
           </a>
-          <a class="ui red button" href="/admin/posts/<%= post._id %>/delete">
+          <a class="btn btn-danger" href="/admin/posts/<%= post._id %>/delete">
             删除
           </a>
         </td>

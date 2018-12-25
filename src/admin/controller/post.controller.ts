@@ -30,14 +30,14 @@ export class PostAdminController {
     }
   }
 
-  // 创建用户页
+  // 创建文章页
   @Get('/posts/create')
   @Render('admin/create')
   async createPage() {
     return {}
   }
 
-  // 创建用户
+  // 创建文章
   @Post('/posts/create')
   async create(@Body() postDto: PostDto, @Req() req: any, @Res() res: Response) {
     const tags = postDto.tags.split(/\s+/)
