@@ -1,0 +1,24 @@
+<div class="header-nav header-nav-post">
+  <div class="g-nav">
+    <a class="item header bounceInDown animated" href="/posts">
+      LiuShuang's Blog
+    </a>
+    <a class="item float-right" href="/login">About</a>
+    <a class="item float-right" href="/register">Tags</a>
+  </div>
+  <div class="nav-center animated fadeIn">
+    <div class="tags">
+      <% post.tags.forEach(tag => { %>
+      <div class="post-tag">
+        <%= tag %>
+      </div>
+      <% }) %>
+    </div>
+    <div class="site-title">
+      <%= post.title %>
+    </div>
+    <div class="info">
+
+    </div>
+  </div>
+</div>

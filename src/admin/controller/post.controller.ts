@@ -92,7 +92,7 @@ export class PostAdminController {
     const post = {
       title: postDto.title,
       content: postDto.content,
-      tags: postDto.tags
+      tags: tags
     }
 
     try {

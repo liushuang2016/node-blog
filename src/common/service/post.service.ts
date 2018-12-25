@@ -24,7 +24,7 @@ export class PostService {
       posts['ut'] = format(posts['ut'])
       return posts
     } catch (e) {
-      throw new Error('文章不存在')
+      throw new BadRequestException('文章不存在')
     }
   }
 

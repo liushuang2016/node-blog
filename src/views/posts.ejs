@@ -1,9 +1,13 @@
 <%- include('header') %>
+<%- include('components/nav') %>
+<%- include('components/notification', { render: render }) %>
 
-<div class="post-list g-container">
-  <% posts.forEach(function (post) { %>
-  <%- include('components/post-item', { post: post }) %>
-  <% }) %>
+<div class="bg-gray padding-tb">
+  <div class="g-container">
+    <% posts.forEach(function (post) { %>
+    <%- include('components/post-item', { post: post }) %>
+    <% }) %>
+  </div>
 </div>
 
 <%- include('footer') %>

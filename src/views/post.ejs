@@ -1,4 +1,4 @@
 <%- include('header') %>
-<%- include('components/post-content') %>
-<%- include('components/comments') %>
+<%- include('components/post-nav.ejs', { post: post }) %>
+<%- include('components/post-content', { post: post }) %>
 <%- include('footer') %>

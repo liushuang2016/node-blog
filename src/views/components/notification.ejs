@@ -1,15 +1,17 @@
 <% if (success || error) { %>
-<div class="alert-container">
-  <% if (success) { %>
-  <div class="alert alert-success" role="alert">
-    <%= success %>
-  </div>
-  <% } %>
+<div class="<%- render === 'gray' ? 'bg-gray' : '' %>" style="padding: 1px;">
+  <div class="alert-container" style="margin-top: 24px;">
+    <% if (success) { %>
+    <div class="alert alert-success" role="alert" style="margin-bottom: 0;">
+      <%= success %>
+    </div>
+    <% } %>
 
-  <% if (error) { %>
-  <div class="alert alert-danger" role="alert">
-    <%= error %>
+    <% if (error) { %>
+    <div class="alert alert-danger" role="alert" style="margin-bottom: 0;">
+      <%= error %>
+    </div>
+    <% } %>
   </div>
-  <% } %>
 </div>
 <% } %>

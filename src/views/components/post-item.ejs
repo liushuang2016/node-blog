@@ -13,8 +13,11 @@
   </p>
   <div class="post-meta">
     <div class="post-tags">
-      <a href="/tags.html#前端开发" class="post-tag">前端开发</a>
-      <a href="/tags.html#vue" class="post-tag">vue</a>
+      <% post.tags.forEach(tag => { %>
+      <a href="/posts?tags=<%= tag %>" class="post-tag">
+        <%= tag %>
+      </a>
+      <% }) %>
     </div>
     <div class="post-info">
       <span>

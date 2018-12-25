@@ -1,4 +1,4 @@
-import { Controller, Get, Res, Render } from "@nestjs/common";
+import { Controller, Get, Res, Render, Param } from "@nestjs/common";
 import { Response } from "express";
 import { PostService } from "src/common/service/post.service";
 
@@ -6,15 +6,31 @@ import { PostService } from "src/common/service/post.service";
 export class PostController {
   constructor(private readonly postService: PostService) { }
 
+  // 首页
   @Get()
   index(@Res() res: Response) {
     return res.redirect('/posts')
   }
 
+  // 文章列表
   @Get('posts')
   @Render('posts')
   async posts() {
     const posts = await this.postService.getPosts()
-    return { posts }
+    return { posts, render: 'gray' }
+  }
+
+  // 文章详情
+  @Get('/posts/:postId')
+  @Render('post')
+  async post(@Param() param) {
+    const postId = param.postId
+
+    try {
+      const post = await this.postService.findByIdToHtml(postId)
+      return { post }
+    } catch (e) {
+      throw e
+    }
   }
 }
