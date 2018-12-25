@@ -14,4 +14,10 @@ export class TagService {
     }
     return false
   }
+
+  async saveTags(tags: string[]) {
+    tags.forEach(async tag => {
+      await this.saveTag(tag)
+    })
+  }
 }

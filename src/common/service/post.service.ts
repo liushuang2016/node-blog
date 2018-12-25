@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, BadRequestException } from "@nestjs/common";
 import * as marked from "marked";
 import { Comment } from "src/model/Comment";
 import { format } from "src/common/utils";
@@ -71,6 +71,24 @@ export class PostService {
       return true
     } catch (e) {
       return false
+    }
+  }
+
+  // 根据id更新文章
+  async updateById(id: any, post: any) {
+    try {
+      await Post.updateOne({ _id: id }, post)
+    } catch (e) {
+      throw new BadRequestException(e.message)
+    }
+  }
+
+  // 新建文章
+  async addPost(post: any) {
+    try {
+      await new Post(post).save()
+    } catch (e) {
+      throw e
     }
   }
 }

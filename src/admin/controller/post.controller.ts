@@ -2,7 +2,7 @@ import { Post as PostModel } from 'src/model/Post';
 import { TagService } from 'src/common/service/tag.service';
 import { AdminGuard } from 'src/common/guard/admin.guard';
 import { PostService } from 'src/common/service/post.service';
-import { Controller, Get, Render, Res, UseGuards, Post, Body, Req } from "@nestjs/common";
+import { Controller, Get, Render, Res, UseGuards, Post, Body, Req, Param } from "@nestjs/common";
 import { Response } from "express";
 import { PostDto } from 'src/admin/dto/post.dto';
 
@@ -14,11 +14,13 @@ export class PostAdminController {
     private readonly tagService: TagService
   ) { }
 
+  // 管理首页
   @Get()
   async index(@Res() res: Response) {
     return res.redirect('/admin/posts')
   }
 
+  // 管理文章页
   @Get('/posts')
   @Render('admin')
   async posts() {
@@ -29,35 +31,83 @@ export class PostAdminController {
     }
   }
 
+  // 创建用户页
   @Get('/posts/create')
   @Render('admin/create')
   async createPage() {
     return {}
   }
 
+  // 创建用户
   @Post('/posts/create')
   async create(@Body() postDto: PostDto, @Req() req: any, @Res() res: Response) {
     const tags = postDto.tags.split(/\s+/)
-    const userId = req.session.user._id
-    let post = new PostModel({
+    const post = {
       title: postDto.title,
       content: postDto.content,
       tags: postDto.tags,
-      author: userId
-    })
+      author: req.session.user._id
+    }
 
     try {
-      post = await post.save()
+      // 新增文章
+      await this.postService.addPost(post)
       // 保存tag
-      tags.forEach(tag => {
-        this.tagService.saveTag(tag)
-      })
+      await this.tagService.saveTags(tags)
       // 创建成功后更新 getPosts
       await this.postService.getPosts(true)
       req.flash('success', '发布成功')
       res.redirect('/admin/posts')
     } catch (e) {
-      throw e
+      req.flash('error', e.message)
+      res.redirect('back')
+    }
+  }
+
+  // 编辑文章页
+  @Get('/posts/:postId/edit')
+  @Render('admin/edit')
+  async editPage(@Param() param: any, @Req() req: any, @Res() res: Response) {
+    const postId = param.postId
+
+    try {
+      const post = await this.postService.getRawPostById(postId)
+      post['tags'] = post['tags'].join(' ')
+      return { post }
+    } catch (e) {
+      req.flash('error', e.message)
+      return res.redirect('/admin/posts')
+    }
+  }
+
+  // 编辑文章
+  @Post('/posts/:postId/edit')
+  async edit(
+    @Param() param: any,
+    @Body() postDto: PostDto,
+    @Req() req: any,
+    @Res() res: Response
+  ) {
+    const postId = param.postId
+    const tags = postDto.tags.split(/\s+/)
+    const post = {
+      title: postDto.title,
+      content: postDto.content,
+      tags: postDto.tags
+    }
+
+    try {
+      // 保存tag
+      await this.tagService.saveTags(tags)
+      // 更新文章
+      await this.postService.updateById(postId, post)
+      // 创建成功后更新 getPosts
+      await this.postService.getPosts(true)
+      req.flash('success', '更新成功')
+      return res.redirect('/admin/posts')
+    } catch (e) {
+      req.flash('error', e.message)
+      return res.redirect('back')
     }
   }
 }
