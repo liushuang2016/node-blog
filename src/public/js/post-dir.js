@@ -1,18 +1,19 @@
-document.addEventListener('DOMContentLoaded', function () {
-  var postDir = document.querySelector('#post-dir')
-  var width = document.body.clientWidth
-
+$(function () {
+  var postDir = $('#post-dir')
+  var width = $(document).outerWidth(true)
   if (!postDir || width < 992) {
     return
   }
-  document.addEventListener('scroll', function (e) {
-    var t = document.documentElement.scrollTop
+
+  $(document).on('scroll', function (e) {
+    var t = $(document).scrollTop()
+
     if (t > 380) {
-      postDir.style.position = 'fixed'
-      postDir.style.top = '20px'
-      postDir.style.maxWidth = '250px'
+      postDir.css('position', 'fixed')
+      postDir.css('top', '20px')
+      postDir.css('maxWidth', '250px')
     } else {
-      postDir.style.position = 'relative'
+      postDir.css('position', 'relative')
     }
   })
 })
