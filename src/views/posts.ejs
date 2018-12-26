@@ -1,9 +1,9 @@
 <%- include('header') %>
 <%- include('components/nav') %>
-<%- include('components/notification', { render: render }) %>
+<%- include('components/notification-gray') %>
 
 <div class="bg-gray padding-tb">
-  <div class="g-container">
+  <div class="container">
     <% posts.forEach(function (post) { %>
     <%- include('components/post-item', { post: post }) %>
     <% }) %>

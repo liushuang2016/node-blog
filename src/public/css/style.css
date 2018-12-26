@@ -65,12 +65,6 @@ ul {
   padding-bottom: 24px;
 }
 
-.alert-container {
-  max-width: 960px;
-  margin-right: auto;
-  margin-left: auto;
-}
-
 .bg-gray {
   background-color: #f7f8fa;
 }
@@ -174,12 +168,6 @@ ul {
 
 .social-icon .iconfont:hover {
   color: #fff;
-}
-
-/* ---------- post-content ---------- */
-.post-content {
-  height: 100%;
-  background-color: #fff;
 }
 
 /* --- post-item post --- */

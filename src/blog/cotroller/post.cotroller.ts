@@ -17,7 +17,7 @@ export class PostController {
   @Render('posts')
   async posts() {
     const posts = await this.postService.getPosts()
-    return { posts, render: 'gray' }
+    return { posts }
   }
 
   // 文章详情
