@@ -22,6 +22,11 @@ p {
   margin: 0;
 }
 
+ul {
+  margin: 0;
+  padding: 0;
+}
+
 .g-container {
   max-width: 960px;
   margin-left: auto;
@@ -91,7 +96,7 @@ p {
   background-position: center;
   color: #eee;
   box-shadow: 0 4px 20px rgba(0,38,55,.16);
-  background-color: #1494fb
+  background-color: #fff;
 }
 
 .header-nav-post {
@@ -138,6 +143,8 @@ p {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 95%;
+  text-align: center;
 }
 
 .site-title {
@@ -264,13 +271,13 @@ p {
   font-size: 16px;
 }
 
-.post-dir .dir-item {
+.post-dir .dir-item a {
   display: block;
   line-height: 1.8;
   color: #333;
 }
 
-.post-dir .dir-item:hover {
+.post-dir .dir-item a:hover {
   color: #000;
 }
 
@@ -279,18 +286,19 @@ p {
 }
 
 .post-dir .dir-h1 {
-  font-size: 18px;
-}
-
-.post-dir .dir-h2 {
   font-size: 16px;
-  padding-left: 8px;
+  list-style: none;
 }
 
-.post-dir .dir-h3,
+.post-dir .dir-h2,
+.post-dir .dir-h3 {
+  font-size: 14px;
+  margin-left: 18px;
+  list-style: circle;
+}
+
 .post-dir .dir-h4,
 .post-dir .dir-h5,
 .post-dir .dir-h6 {
-  font-size: 14px;
-  padding-left: 16px;
+  display: none;
 }

@@ -47,7 +47,7 @@ export const markedToDir = (content: string): string => {
     const arr = line.split(/\s+/)
     const n = arr.shift().length
     const hash = arr.join(' ')
-    return `<a href="#${hash}" class="dir-item dir-h${n}">${hash}</a>`
+    return `<li class="dir-item dir-h${n}"><a href="#${hash}">${hash}</a></li>`
   })
 
   return arr.join(' ')

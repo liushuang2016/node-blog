@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (t > 380) {
       postDir.style.position = 'fixed'
       postDir.style.top = '20px'
+      postDir.style.maxWidth = '250px'
     } else {
       postDir.style.position = 'relative'
     }
