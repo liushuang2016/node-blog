@@ -1,3 +1,5 @@
+import * as marked from "marked";
+
 export const format = (time: any, template = 'YY-MM-DD hh:mm'): string => {
   time = time ? time : Date.now()
   const date = new Date(time)
@@ -29,4 +31,24 @@ export const format = (time: any, template = 'YY-MM-DD hh:mm'): string => {
   )
 
   return format
+}
+
+export const toMarked = (content: string, ops = {}): string => {
+  return marked(content, {
+    headerIds: true,
+    ...ops
+  })
+}
+
+export const markedToDir = (content: string): string => {
+  const arr = content.split('\r\n').filter(line => {
+    return line[0] === '#'
+  }).map(line => {
+    const arr = line.split(/\s+/)
+    const n = arr.shift().length
+    const hash = arr.join(' ')
+    return `<a href="#${hash}" class="dir-item dir-h${n}">${hash}</a>`
+  })
+
+  return arr.join(' ')
 }

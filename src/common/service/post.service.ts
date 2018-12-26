@@ -1,7 +1,6 @@
 import { Injectable, BadRequestException } from "@nestjs/common";
-import * as marked from "marked";
 import { Comment } from "src/model/Comment";
-import { format } from "src/common/utils";
+import { format, toMarked, markedToDir } from "src/common/utils";
 import { Post } from "src/model/Post";
 import { GlobalService } from "src/common/service/global.service";
 
@@ -20,7 +19,8 @@ export class PostService {
       // pv + 1, 如果不await则函数返回后，异步操作会失败
       await Post.updateOne({ _id: posts._id }, { $inc: { pv: 1 } })
       posts['pv'] += 1
-      posts['content'] = marked(posts['content'])
+      posts['dir'] = markedToDir(posts['content'])
+      posts['content'] = toMarked(posts['content'])
       posts['ct'] = format(posts['ct'])
       posts['ut'] = format(posts['ut'])
       return posts
@@ -50,7 +50,8 @@ export class PostService {
     if (GlobalService.get('posts') && !update) {
       return GlobalService.get('posts')
     }
-    let posts = await Post.find({ _delete: false })
+    // 按时间降序排列
+    let posts = await Post.find({ _delete: false }).sort({ _id: -1 })
     let promisePosts = posts.map(async post => {
       post = post.toObject()
       // 获取文章首段作为摘要
@@ -78,6 +79,7 @@ export class PostService {
   // 根据id更新文章
   async updateById(id: any, post: any) {
     try {
+      post.ut = Date.now()
       await Post.updateOne({ _id: id }, post)
     } catch (e) {
       throw new BadRequestException(e.message)

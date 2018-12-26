@@ -28,11 +28,6 @@ p {
   margin-right: auto;
 }
 
-.button {
-  background-color: #4fc08d !important;
-  color: #fff !important;
-}
-
 .avatar {
   border-radius: 3px;
   width: 48px;
@@ -245,4 +240,57 @@ p {
   font-size: 14px;
   letter-spacing: .6px;
   line-height: 22px;
+}
+
+/* --- post-dir ---*/
+.post-dir {
+  position: relative;
+  padding: 0 15px;
+  max-height: 500px;
+  overflow: auto;
+  border-left: 1px solid rgba(0,0,0,.15);
+}
+
+@media (max-width: 991px) { 
+  .post-dir {
+    display: none;
+  }
+}
+
+.post-dir .dir-title {
+  font-weight: bold;
+  border: none;
+  padding: 8px 12px;
+  font-size: 16px;
+}
+
+.post-dir .dir-item {
+  display: block;
+  line-height: 1.8;
+  color: #333;
+}
+
+.post-dir .dir-item:hover {
+  color: #000;
+}
+
+.post-dir a:hover {
+  text-decoration: underline;
+}
+
+.post-dir .dir-h1 {
+  font-size: 18px;
+}
+
+.post-dir .dir-h2 {
+  font-size: 16px;
+  padding-left: 8px;
+}
+
+.post-dir .dir-h3,
+.post-dir .dir-h4,
+.post-dir .dir-h5,
+.post-dir .dir-h6 {
+  font-size: 14px;
+  padding-left: 16px;
 }

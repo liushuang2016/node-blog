@@ -5,5 +5,6 @@ module.exports = {
     key: 'ss',
     maxAge: 1000 * 60 * 60 * 24 * 1
   },
-  mongodb: 'mongodb://localhost:27017/blog'
+  mongodb: 'mongodb://localhost:27017/blog',
+  pageSize: 12
 }
