@@ -1,48 +1,54 @@
-<div class="ui grid">
-  <div class="four wide column"></div>
-  <div class="eight wide column">
-    <div class="ui segment">
-      <div class="ui minimal comments">
-        <h3 class="ui dividing header">
-          留言
-          <% if (!user) { %>
-          <a href="/login" class="float-right">登录后评论</a>
-          <% } %>
-        </h3>
-
-        <% comments.forEach(function (comment) { %>
-        <div class="comment">
-          <span class="avatar">
-            <img src="/img/<%= comment.author.avatar %>">
-          </span>
-          <div class="content">
-            <a class="author" href="/posts?author=<%= comment.author._id %>">
-              <%= comment.author.name %></a>
-            <div class="metadata">
-              <span class="date">
-                <%= comment.create_time %></span>
-            </div>
-            <div class="text">
-              <%- comment.content %>
-            </div>
-
-            <% if (user && comment.author._id && user._id.toString() === comment.author._id.toString()) { %>
-            <div class="actions">
-              <a class="reply" href="/comments/<%= comment._id %>/remove">删除</a>
-            </div>
-            <% } %>
-          </div>
-        </div>
-        <% }) %>
-
+<div class="container">
+  <div class="row">
+    <div class="comments-content col-md-9 col-sm-12 col-xs-12">
+      <%- include('notification.ejs') %>
+      <h3 class="comments-title" id="comments-title">
+        评论
+        <%= comments.length %>
         <% if (user) { %>
-        <form class="ui reply form" method="post" action="/comments">
-          <input name="postId" value="<%= post._id %>" hidden>
-          <div class="field">
-            <textarea name="content"></textarea>
+        <span class="comments-name float-right">
+          <%= user.name %>
+          <i class="iconfont icon-liuyan1"></i>
+        </span>
+        <% } %>
+      </h3>
+      <% if (comments.length === 0) { %>
+      <div class="comments-none">暂无评论</div>
+      <% } %>
+
+      <% comments.forEach(function (comment) { %>
+      <div class="comment-item">
+        <span class="avatar">
+          <img src="/img/<%= comment.author.avatar %>">
+        </span>
+        <div class="comment-content">
+          <div class="date">
+            <%= comment.ct %>
           </div>
-          <input type="submit" class="ui icon button" value="留言" />
+          <div class="text">
+            <%= comment.content %>
+          </div>
+
+          <% if (user && comment.author._id.toString() !== user._id.toString()) { %>
+          <div class="actions">
+            <a class="reply" href="/comments/<%= comment._id %>/remove">删除</a>
+          </div>
+          <% } %>
+        </div>
+      </div>
+      <% }) %>
+
+      <div class="comments-form">
+        <% if (user) { %>
+        <form method="post" action="/comments">
+          <div class="form-group">
+            <label for="comments">添加评论：</label>
+            <textarea class="form-control" id="comments" rows="4" style="resize: none;"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">评论</button>
         </form>
+        <% } else if (next) { %>
+        <a href="/login?next=<%- next %>#comments-title" class="no-login">登录后评论</a>
         <% } %>
       </div>
     </div>

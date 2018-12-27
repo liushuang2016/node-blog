@@ -6,10 +6,12 @@ import { Comment } from "src/model/Comment";
 export class CommentService {
   // 获取对应文章下所有留言
   async getComments(postId: any) {
-    let comments = await Comment.find({ postId })
+    let comments = await Comment.find({ postId }).populate('author')
 
     comments = comments.map(comment => {
       comment = comment.toObject()
+      delete comment['author']['password']
+      delete comment['author']['role']
       comment['ct'] = format(comment['ct'])
       return comment
     })

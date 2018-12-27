@@ -48,6 +48,7 @@ async function bootstrap() {
   app.use(function (req, res, next) {
     res.locals.title = 'LiuShuang\'s Blog'
     res.locals.user = req.session.user
+    res.locals.next = ''
     res.locals.success = req.flash('success').toString()
     res.locals.error = req.flash('error').toString()
     next()

@@ -31,6 +31,8 @@ export class UserController {
     @Req() req: any,
     @Query() query: any
   ) {
+    login.name = login.name.trim()
+    login.password = login.password.trim()
     let user = await User.findOne({ name: login.name })
     // 用户名不存在则注册
     if (!user) {

@@ -78,6 +78,28 @@ ul {
 .icon-item .iconfont {
   font-size: 18px;
 }
+
+.back-to {
+  display: block;
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #999;
+}
+
+.back-to:visited {
+  color: #999;
+  text-decoration: none!important;
+}
+
+.back-to:focus {
+  text-decoration: none!important;
+}
+
+.back-to:hover {
+  color: #563d7c;
+  text-decoration: none!important;
+}
 /* ---------- nav ---------- */
 
 .header-nav, .header-nav-post {
@@ -90,7 +112,7 @@ ul {
   background-position: center;
   color: #eee;
   box-shadow: 0 4px 20px rgba(0,38,55,.16);
-  background-color: #fff;
+  background-color: #49b1f5;
 }
 
 .header-nav-post {
@@ -241,9 +263,12 @@ ul {
 .post-dir {
   position: relative;
   padding: 0 15px;
+  border-left: 1px solid rgba(0,0,0,.15);
+}
+
+.post-dir ul {
   max-height: 500px;
   overflow: auto;
-  border-left: 1px solid rgba(0,0,0,.15);
 }
 
 @media (max-width: 991px) { 
@@ -281,7 +306,7 @@ ul {
 .post-dir .dir-h2,
 .post-dir .dir-h3 {
   font-size: 14px;
-  margin-left: 18px;
+  margin-left: 24px;
   list-style: circle;
 }
 
@@ -289,4 +314,30 @@ ul {
 .post-dir .dir-h5,
 .post-dir .dir-h6 {
   display: none;
+}
+
+/* --- comments ---*/
+.comments-content {
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  margin-top: 24px;
+  background-color: #f7f8fa;
+}
+
+.comments-content .iconfont {
+  font-size: 24px;
+}
+
+.comments-none {
+  text-align: center;
+  font-size: 18px;
+  padding: 16px;
+}
+
+.comments-title {
+  border-bottom: 2px solid #e7e9ee;
+}
+
+.comments-form {
+  margin-top: 16px;
 }

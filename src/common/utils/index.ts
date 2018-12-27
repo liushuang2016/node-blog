@@ -1,6 +1,6 @@
 import * as marked from "marked";
 
-export const format = (time: any, template = 'YY-MM-DD hh:mm'): string => {
+export const format = (time: any, template = 'YY-MM-DD'): string => {
   time = time ? time : Date.now()
   const date = new Date(time)
   const year = String(date.getFullYear())
