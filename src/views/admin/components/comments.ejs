@@ -6,7 +6,7 @@
     <ul class="pagination">
       <% for ( var i = 1; i <= pageCount; i++ ) { %>
       <li class="<%= page == i ? 'active' : '' %>">
-        <a href="<%= next %>?p=<%= i %>#comments-container">
+        <a href="<%= next %>?p=<%= i %>">
           <%= i %>
         </a>
       </li>

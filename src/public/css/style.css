@@ -325,7 +325,7 @@ ul {
 }
 
 .comments-content .iconfont {
-  font-size: 24px;
+  font-size: 18px;
 }
 
 .comments-none {
@@ -395,4 +395,13 @@ ul {
 .comments-info .reply {
   margin-right: 8px;
   cursor: pointer;
+}
+
+.comments-name {
+  font-size: 18px;
+}
+
+/* --- paging --- */
+.pagination {
+  margin: 10px 0;
 }

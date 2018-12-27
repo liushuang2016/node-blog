@@ -41,10 +41,10 @@ export class UserAdminController {
   @Render('admin/users-comments')
   async userComments(@Param() param, @Req() req, @Res() res) {
     const userId = param.userId
-    const page = req.query.q || 1
+    const page = req.query.p || 1
     const path = req.path
     try {
-      const comments = await this.commentService.getCommentsByUserId(userId)
+      const comments = await this.commentService.getCommentsByUserId(userId, page)
       const commentsCount = await this.commentService.getCommentsCount({ author: userId })
       const pageCount = Math.ceil(commentsCount / this.commentService.commentSize)
       return { comments, commentsCount, pageCount, page, next: path }

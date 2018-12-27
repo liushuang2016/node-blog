@@ -29,10 +29,14 @@ export class CommentController {
 
     try {
       await this.commentService.addComment(comment)
-      req.flash('success', '留言成功')
+      // req.flash('success', '留言成功')
+      const commentsCount = await this.commentService.getCommentsCount({ postId })
+      // 翻页更新page
+      let page = Math.ceil(commentsCount / this.commentService.commentSize)
+      return res.redirect(`/posts/${postId}?p=${page}#comments`)
     } catch (e) {
       req.flash('error', e.message)
+      return res.redirect(`/posts/${postId}?p=${page}#comments-container`)
     }
-    return res.redirect(`/posts/${postId}?p=${page}#comments-container`)
   }
 }

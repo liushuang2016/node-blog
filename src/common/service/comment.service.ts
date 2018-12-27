@@ -24,8 +24,9 @@ export class CommentService {
   }
 
   // 获取用户的所有留言
-  async getCommentsByUserId(userId: any) {
+  async getCommentsByUserId(userId: any, page = 1) {
     let comments = await Comment.find({ author: userId })
+      .skip((page - 1) * this.commentSize).limit(this.commentSize).populate('author')
 
     comments = comments.map(comment => {
       comment = comment.toObject()

@@ -36,7 +36,7 @@ export class UserController {
     let user = await User.findOne({ name: login.name })
     // 用户名不存在则注册
     if (!user) {
-      let user = new User({
+      user = new User({
         name: login.name,
         password: sha1(login.password),
         ip: req.ip

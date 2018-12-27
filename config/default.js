@@ -7,5 +7,5 @@ module.exports = {
   },
   mongodb: 'mongodb://localhost:27017/blog',
   postSize: 12,
-  commentSize: 20
+  commentSize: 15
 }
