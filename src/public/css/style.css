@@ -193,6 +193,10 @@ ul {
 }
 
 /* --- post-item post --- */
+.post-content {
+  min-height: 500px;
+}
+
 .post-item {
   width: 100%;
   margin-bottom: 16px;
@@ -403,5 +407,9 @@ ul {
 
 /* --- paging --- */
 .pagination {
-  margin: 10px 0;
+  margin: 6px 0;
+}
+
+.pagination li a {
+  padding: 4px 9px;
 }
