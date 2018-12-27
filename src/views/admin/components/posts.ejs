@@ -15,19 +15,19 @@
       <% data.forEach(function (post) { %>
       <tr>
         <td>
-          <%- post.title %>
+          <%= post.title %>
         </td>
         <td>
-          <%- post.ct %>
+          <%= post.ct %>
         </td>
         <td>
-          <%- post.ut %>
+          <%= post.ut %>
         </td>
         <td>
-          <%- post.pv %>
+          <%= post.pv %>
         </td>
         <td>
-          <%- post.commentsCount %>
+          <%= post.commentsCount %>
         </td>
         <td>
           <a class="btn btn-primary" href="/admin/posts/<%= post._id %>/edit">

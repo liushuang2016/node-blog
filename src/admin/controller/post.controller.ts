@@ -4,13 +4,15 @@ import { PostService } from 'src/common/service/post.service';
 import { Controller, Get, Render, Res, UseGuards, Post, Body, Req, Param } from "@nestjs/common";
 import { Response } from "express";
 import { PostDto } from 'src/admin/dto/post.dto';
+import { CommentService } from 'src/common/service/comment.service';
 
 @Controller('admin')
 @UseGuards(AdminGuard)
 export class PostAdminController {
   constructor(
     private readonly postService: PostService,
-    private readonly tagService: TagService
+    private readonly tagService: TagService,
+    private readonly commentService: CommentService
   ) { }
 
   // 管理首页
@@ -68,11 +70,17 @@ export class PostAdminController {
   @Render('admin/edit')
   async editPage(@Param() param: any, @Req() req: any, @Res() res: Response) {
     const postId = param.postId
+    const path = req.path
+    const page = req.query.p || 1
 
     try {
       const post = await this.postService.getRawPostById(postId)
+      const comments = await this.commentService.getComments(postId, page)
+      const commentsCount = await this.commentService.getCommentsCount({ postId })
+      const pageCount = Math.ceil(commentsCount / this.commentService.commentSize)
       post['tags'] = post['tags'].join(' ')
-      return { post }
+
+      return { post, comments, next: path, commentsCount, pageCount, page }
     } catch (e) {
       req.flash('error', e.message)
       return res.redirect('/admin/posts')

@@ -341,3 +341,58 @@ ul {
 .comments-form {
   margin-top: 16px;
 }
+
+.comments-item {
+  display: flex;
+  padding: 10px;
+  border-bottom: 1px solid #e2e2e2;
+}
+
+.comments-avatar {
+  width: 48px;
+  margin-right: 10px;
+}
+
+.comments-avatar img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.comments-item-content {
+  flex: 1;
+}
+
+.comments-info {
+  padding: 4px 0;
+}
+
+.comments-info .name {
+  color: gray;
+  margin-right: 8px;
+}
+
+.comments-info span {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.comments-info .date {
+  color: #ccc;
+}
+
+.comments-info .number {
+  font-size: 9px;
+  line-height: 9px;
+  font-weight: 500;
+  border-radius: 10px;
+  display: inline-block;
+  background-color: #f0f0f0;
+  color: #ccc;
+  padding: 2px 5px 2px 5px;
+  margin-top: 4px;
+}
+
+.comments-info .reply {
+  margin-right: 8px;
+  cursor: pointer;
+}

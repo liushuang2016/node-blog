@@ -21,6 +21,8 @@ export class UserService {
   async delUserById(id: any) {
     try {
       await User.deleteOne({ _id: id })
+      // 删除该用户的评论
+      await Comment.deleteMany({ author: id })
       return true
     } catch (e) {
       throw new Error('用户不存在')

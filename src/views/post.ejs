@@ -1,5 +1,5 @@
 <%- include('header') %>
 <%- include('components/post-nav.ejs', { post: post }) %>
 <%- include('components/post-content', { post: post }) %>
-<%- include('components/comments.ejs', { comments: comments }) %>
+<%- include('components/comments.ejs', { comments: comments, post: post }) %>
 <%- include('footer') %>

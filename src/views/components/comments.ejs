@@ -1,10 +1,10 @@
-<div class="container">
+<div class="container" id="comments-container">
   <div class="row">
-    <div class="comments-content col-md-9 col-sm-12 col-xs-12">
+    <div id="comments-content" class="comments-content col-md-9 col-sm-12 col-xs-12">
       <%- include('notification.ejs') %>
-      <h3 class="comments-title" id="comments-title">
+      <h3 class="comments-title">
         评论
-        <%= comments.length %>
+        <%= commentsCount %>
         <% if (user) { %>
         <span class="comments-name float-right">
           <%= user.name %>
@@ -12,43 +12,63 @@
         </span>
         <% } %>
       </h3>
+
       <% if (comments.length === 0) { %>
       <div class="comments-none">暂无评论</div>
       <% } %>
 
-      <% comments.forEach(function (comment) { %>
-      <div class="comment-item">
-        <span class="avatar">
-          <img src="/img/<%= comment.author.avatar %>">
-        </span>
-        <div class="comment-content">
-          <div class="date">
-            <%= comment.ct %>
+      <% if (pageCount > 1) { %>
+      <nav aria-label="Page navigation">
+        <ul class="pagination">
+          <% for ( var i = 1; i <= pageCount; i++ ) { %>
+          <li class="<%= page == i ? 'active' : '' %>">
+            <a href="<%= next %>?p=<%= i %>#comments-container">
+              <%= i %>
+            </a>
+          </li>
+          <% } %>
+        </ul>
+      </nav>
+      <% } %>
+
+      <% comments.forEach(function (comment, i) { %>
+      <div class="comments-item">
+        <div class="comments-avatar">
+          <img src="/img/site/<%= comment.author.avatar %>">
+        </div>
+        <div class="comments-item-content">
+          <div class="comments-info">
+            <span class="name">
+              <%= comment.author.name %>
+            </span>
+            <span class="date">
+              <%= comment.ct %>
+            </span>
+            <span class="number float-right">
+              <%= i + 1 + (page - 1) *20 %>
+            </span>
+            <% if (user) { %>
+            <a href="#comments" class="reply float-right comments-replay" data-name="<%= comment.author.name %>">回复</a>
+            <% } %>
           </div>
           <div class="text">
-            <%= comment.content %>
+            <%- comment.content %>
           </div>
-
-          <% if (user && comment.author._id.toString() !== user._id.toString()) { %>
-          <div class="actions">
-            <a class="reply" href="/comments/<%= comment._id %>/remove">删除</a>
-          </div>
-          <% } %>
         </div>
       </div>
       <% }) %>
 
       <div class="comments-form">
         <% if (user) { %>
-        <form method="post" action="/comments">
+        <form method="post" action="/comments/<%= post._id %>?p=<%= page %>">
           <div class="form-group">
-            <label for="comments">添加评论：</label>
-            <textarea class="form-control" id="comments" rows="4" style="resize: none;"></textarea>
+            <label for="comments">添加评论(150字以内)：</label>
+            <textarea name="content" class="form-control" id="comments" rows="4" style="resize: none;"></textarea>
           </div>
           <button type="submit" class="btn btn-primary">评论</button>
         </form>
         <% } else if (next) { %>
-        <a href="/login?next=<%- next %>#comments-title" class="no-login">登录后评论</a>
+        <a href="/login?next=<%= next %>#comments-container" class="no-login">登录后评论</a>
         <% } %>
       </div>
     </div>

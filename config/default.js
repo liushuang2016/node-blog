@@ -6,5 +6,6 @@ module.exports = {
     maxAge: 1000 * 60 * 60 * 24 * 1
   },
   mongodb: 'mongodb://localhost:27017/blog',
-  pageSize: 12
+  postSize: 12,
+  commentSize: 20
 }

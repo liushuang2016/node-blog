@@ -14,21 +14,24 @@
       <% data.forEach(function (user) { %>
       <tr>
         <td>
-          <%- user.name %>
+          <%= user.name %>
         </td>
         <td>
-          <%- user.ct %>
+          <%= user.ct %>
         </td>
         <td>
-          <%- user.ip %>
+          <%= user.ip %>
         </td>
         <td>
-          <%- user.password %>
+          <%= user.password %>
         </td>
         <td>
-          <%- user.commentsCount %>
+          <%= user.commentsCount %>
         </td>
         <td>
+          <a class="btn btn-primary" href="/admin/users/<%= user._id %>/comments">
+            管理评论
+          </a>
           <a class="btn btn-danger" href="/admin/users/<%= user._id %>/delete">
             删除
           </a>

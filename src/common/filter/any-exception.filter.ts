@@ -17,12 +17,19 @@ export class AnyExceptionFilter implements ExceptionFilter {
 
     if (exception.status === 404) {
       response.render('404')
+      // dto 验证错误
     } else if (exception.status === 444) {
       request.flash('error', exception.message.message)
       response.redirect('back')
     } else {
-      const message = exception.message ?
-        exception.message.message : exception.ValidationError
+      let message = ''
+      if (exception.message) {
+        message = typeof exception.message === 'string'
+          ? exception.message
+          : exception.message.message
+      } else {
+        message = exception.ValidationError
+      }
       request.flash('error', message)
       response.redirect('/posts')
     }
