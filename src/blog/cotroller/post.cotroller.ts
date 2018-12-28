@@ -19,9 +19,13 @@ export class PostController {
   // 文章列表
   @Get('posts')
   @Render('posts')
-  async posts() {
-    const posts = await this.postService.getPosts()
-    return { posts }
+  async posts(@Req() req) {
+    const page = req.query.p || 1
+    const posts = await this.postService.getPostsUsePage(page)
+    const pageCount = Math.ceil(
+      posts['commentsCount'] / this.postService.postSize
+    )
+    return { posts, pageCount, page }
   }
 
   // 文章详情
@@ -34,12 +38,9 @@ export class PostController {
 
     const post = await this.postService.findByIdToHtml(postId)
     const comments = await this.commentService.getComments(postId, page)
-    const commentsCount = await this.commentService.getCommentsCount({ postId })
     // 留言的页数
-    let pageCount: any = Math.ceil(commentsCount / this.commentService.commentSize)
+    let pageCount: any = Math.ceil(post['commentsCount'] / this.commentService.commentSize)
 
-    // 更新getPosts
-    this.postService.getPosts(true)
-    return { post, comments, next: path, pageCount, page, commentsCount }
+    return { post, comments, next: path, pageCount, page }
   }
 }

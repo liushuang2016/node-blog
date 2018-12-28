@@ -3,9 +3,12 @@ import { Comment } from "src/model/Comment";
 import { format, toMarked, markedToDir } from "src/common/utils";
 import { Post } from "src/model/Post";
 import { GlobalService } from "src/common/service/global.service";
+import * as config from "config";
 
 @Injectable()
 export class PostService {
+  public readonly postSize: number = config.get('postSize') || 12
+
   // 通过id得到 marked 后的文章
   async findByIdToHtml(id: any) {
     try {
@@ -14,8 +17,6 @@ export class PostService {
       if (posts['_delete']) {
         throw new Error('文章不存在')
       }
-      // 获取评论数
-      posts['commentsCount'] = await Comment.countDocuments({ postId: posts._id })
       // pv + 1, 如果不await则函数返回后，异步操作会失败
       await Post.updateOne({ _id: posts._id }, { $inc: { pv: 1 } })
       posts['pv'] += 1
@@ -47,22 +48,36 @@ export class PostService {
 
   // 获取所有文章
   async getPosts(update = false) {
-    if (GlobalService.get('posts') && !update) {
-      return GlobalService.get('posts')
-    }
     // 按时间降序排列
     let posts = await Post.find({ _delete: false }).sort({ _id: -1 })
-    let promisePosts = posts.map(async post => {
+
+    posts = posts.map(post => {
       post = post.toObject()
       // 获取文章首段作为摘要
       post['excerpt'] = post['content'].split('\r\n')[0]
-      post['commentsCount'] = await Comment.countDocuments({ postId: post._id })
+      // post['commentsCount'] = await Comment.countDocuments({ postId: post._id })
       post['ct'] = format(post['ct'])
       post['ut'] = format(post['ut'])
       return post
     })
-    posts = await Promise.all(promisePosts)
-    GlobalService.set('posts', posts)
+    return posts
+  }
+
+  // 分页获取文章
+  async getPostsUsePage(page = 1) {
+    // 按时间降序排列
+    let posts = await Post.find({ _delete: false })
+      .sort({ _id: -1 }).skip(this.postSize * (page - 1)).limit(this.postSize)
+
+    posts = posts.map(post => {
+      post = post.toObject()
+      // 获取文章首段作为摘要
+      post['excerpt'] = post['content'].split('\r\n')[0]
+      // post['commentsCount'] = await Comment.countDocuments({ postId: post._id })
+      post['ct'] = format(post['ct'])
+      post['ut'] = format(post['ut'])
+      return post
+    })
     return posts
   }
 
@@ -80,6 +95,7 @@ export class PostService {
   async updateById(id: any, post: any) {
     try {
       post.ut = Date.now()
+      // post.commentsCount = await Comment.countDocuments({ postId: id })
       await Post.updateOne({ _id: id }, post)
     } catch (e) {
       throw new BadRequestException(e.message)
@@ -88,10 +104,21 @@ export class PostService {
 
   // 新建文章
   async addPost(post: any) {
+    await new Post(post).save()
+  }
+
+  // 通过文章 id 更新文章commentsCount
+  async updateCommentsCount(id: any, commentsCount?: number) {
     try {
-      await new Post(post).save()
+      if (commentsCount) {
+        await Post.updateOne({ _id: id }, { commentsCount })
+      } else {
+        const commentsCount = await Comment.countDocuments({ postId: id })
+        await Post.updateOne({ _id: id }, { commentsCount })
+      }
+      return true
     } catch (e) {
-      throw e
+      return false
     }
   }
 }

@@ -10,17 +10,8 @@ const PostSchema = new Schema({
   tags: { type: Array, required: true },
   ct: { type: Date, default: Date.now },
   ut: { type: Date, default: Date.now },
+  commentsCount: { type: Number, default: 0 },
   _delete: { type: Boolean, default: false }
 })
-
-export interface PostEntity {
-  author: mongoose.Schema.Types.ObjectId;
-  title: string;
-  pv: number;
-  tags: string[];
-  ct: string;
-  ut: string;
-  _delete: boolean;
-}
 
 export const Post = mongoose.model('post', PostSchema)

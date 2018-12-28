@@ -3,11 +3,16 @@ import { CommentService } from 'src/common/service/comment.service';
 import { Controller, Post, Param, Req, UseGuards, Body, Res, Query } from "@nestjs/common";
 import { LoginGuard } from 'src/common/guard/checkLogin.guard';
 import { Response } from 'express';
+import { PostService } from 'src/common/service/post.service';
 
 @Controller()
 export class CommentController {
-  constructor(private readonly commentService: CommentService) { }
+  constructor(
+    private readonly commentService: CommentService,
+    private readonly postService: PostService
+  ) { }
 
+  // 评论
   @Post('/comments/:postId')
   @UseGuards(LoginGuard)
   async comments(
@@ -31,6 +36,8 @@ export class CommentController {
       await this.commentService.addComment(comment)
       // req.flash('success', '留言成功')
       const commentsCount = await this.commentService.getCommentsCount({ postId })
+      // 更新文章 commentsCount
+      await this.postService.updateCommentsCount(postId, commentsCount)
       // 翻页更新page
       let page = Math.ceil(commentsCount / this.commentService.commentSize)
       return res.redirect(`/posts/${postId}?p=${page}#comments`)

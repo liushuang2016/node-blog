@@ -60,7 +60,11 @@ export class PostAdminController {
       req.flash('success', '发布成功')
       res.redirect('/admin/posts')
     } catch (e) {
-      req.flash('error', e.message)
+      if (e.code == 11000) {
+        req.flash('error', '文章标题重复')
+      } else {
+        req.flash('error', e.message || e.errmsg)
+      }
       res.redirect('back')
     }
   }
