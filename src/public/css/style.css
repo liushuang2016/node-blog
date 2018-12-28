@@ -134,6 +134,16 @@ ul {
   padding: 16px 36px;
 }
 
+@media (max-width: 425px) {
+  .g-nav {
+    padding: 16px 0;
+  }
+
+  .header-nav .header {
+    font-size: 16px !important;
+  }
+}
+
 .header-nav .item {
   display: block;
   height: 100%;
@@ -163,7 +173,7 @@ ul {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 95%;
+  width: 96%;
   text-align: center;
 }
 
@@ -386,6 +396,25 @@ ul {
 .comments-info span {
   font-size: 14px;
   line-height: 1;
+}
+
+@media (max-width: 375px) {
+  .comments-item {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .comments-avatar {
+    width: 36px;
+  }
+  .comments-info .name {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 320px) {
+  .comments-info span {
+    font-size: 12px;
+  }
 }
 
 .comments-info .date {

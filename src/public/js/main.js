@@ -41,8 +41,7 @@ function search($ele) {
 
 function replay($ele) {
   var width = $(document).outerWidth(true)
-  // 在非移动平台显示评论
-  if (!$ele || width < 768) {
+  if (!$ele) {
     return
   }
 
