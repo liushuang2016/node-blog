@@ -64,10 +64,20 @@ export class PostService {
   }
 
   // 分页获取文章
-  async getPostsUsePage(page = 1) {
-    // 按时间降序排列
-    let posts = await Post.find({ _delete: false })
-      .sort({ _id: -1 }).skip(this.postSize * (page - 1)).limit(this.postSize)
+  async getPostsUsePage(page = 1, tag?: string) {
+    let query = { _delete: false }
+    let posts = []
+
+    if (tag) {
+      posts = await Post.find(query).sort({ _id: -1 })
+      posts = posts.filter(post => {
+        return post['tags'].indexOf(tag) !== -1
+      })
+    } else {
+      posts = await Post.find(query)
+        .sort({ _id: -1 })
+        .skip(this.postSize * (page - 1)).limit(this.postSize)
+    }
 
     posts = posts.map(post => {
       post = post.toObject()
@@ -123,7 +133,13 @@ export class PostService {
   }
 
   // 获取文章数量
-  async getPostsCount() {
+  async getPostsCount(tag?: string) {
+    if (tag) {
+      const posts = await Post.find({ _delete: false })
+      return posts.filter(post => {
+        return post['tags'].indexOf(tag) !== -1
+      }).length
+    }
     return await Post.countDocuments({ _delete: false })
   }
 }
