@@ -406,10 +406,14 @@ ul {
 }
 
 /* --- paging --- */
-.pagination {
+.post-content .pagination {
   margin: 6px 0;
 }
 
-.pagination li a {
+.post-content .pagination li a {
   padding: 4px 9px;
+}
+
+.post-list .navigation {
+  text-align: center;
 }

@@ -20,10 +20,12 @@ export class PostController {
   @Get('posts')
   @Render('posts')
   async posts(@Req() req) {
-    const page = req.query.p || 1
+    let page = req.query.p || 1
+    page = typeof +page === 'number' ? +page : 1
     const posts = await this.postService.getPostsUsePage(page)
+    const postsCount = await this.postService.getPostsCount()
     const pageCount = Math.ceil(
-      posts['commentsCount'] / this.postService.postSize
+      postsCount / this.postService.postSize
     )
     return { posts, pageCount, page }
   }

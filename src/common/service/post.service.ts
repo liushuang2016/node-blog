@@ -121,4 +121,9 @@ export class PostService {
       return false
     }
   }
+
+  // 获取文章数量
+  async getPostsCount() {
+    return await Post.countDocuments({ _delete: false })
+  }
 }
