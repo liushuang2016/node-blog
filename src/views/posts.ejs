@@ -7,42 +7,49 @@
     <% posts.forEach(function (post) { %>
     <%- include('components/post-item', { post: post }) %>
     <% }) %>
+
+    <% if (posts.length === 0) { %>
+    <div class="post-item">
+      <h3 class="text-c">暂无文章</h>
+    </div>
+    <% } %>
+
+    <% if (pageCount > 1) { %>
+    <nav class="navigation" aria-label="Page navigation">
+      <ul class="pagination">
+        <li class="<%= page == 1 ? 'disabled' : '' %>">
+          <% if (page == 1) { %>
+          <span aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </span>
+          <% } else { %>
+          <a href="/posts?p=<%= page - 1 %>" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+          <% } %>
+        </li>
+        <% for ( var i = 1; i <= pageCount; i++ ) { %>
+        <li class="<%= page == i ? 'active' : '' %>">
+          <a href="/posts?p=<%= i %>">
+            <%= i %>
+          </a>
+        </li>
+        <% } %>
+        <li class="<%= page == pageCount ? 'disabled' : '' %>">
+          <% if (page == pageCount) { %>
+          <span aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </span>
+          <% } else { %>
+          <a href="/posts?p=<%= page + 1 %>" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+          <% } %>
+        </li>
+      </ul>
+    </nav>
+    <% } %>
   </div>
-  <% if (pageCount > 1) { %>
-  <nav class="navigation" aria-label="Page navigation">
-    <ul class="pagination">
-      <li class="<%= page == 1 ? 'disabled' : '' %>">
-        <% if (page == 1) { %>
-        <span aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </span>
-        <% } else { %>
-        <a href="/posts?p=<%= page - 1 %>" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-        <% } %>
-      </li>
-      <% for ( var i = 1; i <= pageCount; i++ ) { %>
-      <li class="<%= page == i ? 'active' : '' %>">
-        <a href="/posts?p=<%= i %>">
-          <%= i %>
-        </a>
-      </li>
-      <% } %>
-      <li class="<%= page == pageCount ? 'disabled' : '' %>">
-        <% if (page == pageCount) { %>
-        <span aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-        </span>
-        <% } else { %>
-        <a href="/posts?p=<%= page + 1 %>" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-        <% } %>
-      </li>
-    </ul>
-  </nav>
-  <% } %>
 </div>
 
 <%- include('footer') %>

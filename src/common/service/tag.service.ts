@@ -20,4 +20,8 @@ export class TagService {
       await this.saveTag(tag)
     })
   }
+
+  async getTags() {
+    return await Tag.find()
+  }
 }

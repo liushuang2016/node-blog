@@ -1,0 +1,17 @@
+<%- include('header') %>
+<%- include('components/nav.ejs') %>
+
+<div class="container">
+  <h3 class="text-c">Tag -
+    <%= tags.length %>
+  </h3>
+  <div class="tags-content text-c">
+    <% tags.forEach(tag => { %>
+    <a href="/posts?tag=<%= tag.tag %>" class="label label-info">
+      <%= tag.tag %>
+    </a>
+    <% }) %>
+  </div>
+</div>
+
+<%- include('footer') %>

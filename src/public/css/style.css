@@ -33,6 +33,10 @@ ul {
   margin-right: auto;
 }
 
+.text-c {
+  text-align: center;
+}
+
 .avatar {
   border-radius: 3px;
   width: 48px;
@@ -416,4 +420,16 @@ ul {
 
 .post-list .navigation {
   text-align: center;
+}
+
+/* --- tags ---*/
+.tags-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.tags-content a {
+  display: inline-block;
+  margin: 8px;
+  font-size: 18px;
 }
