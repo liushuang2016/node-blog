@@ -78,10 +78,11 @@ export class PostAdminController {
     try {
       const post = await this.postService.getRawPostById(postId)
       const comments = await this.commentService.getComments(postId, page)
-      const pageCount = Math.ceil(post['commentsCount'] / this.commentService.commentSize)
+      const commentsCount = post['commentsCount']
+      const pageCount = Math.ceil(commentsCount / this.commentService.commentSize)
       post['tags'] = post['tags'].join(' ')
 
-      return { post, comments, next: path, pageCount, page }
+      return { post, comments, next: path, pageCount, page, commentsCount }
     } catch (e) {
       req.flash('error', e.message)
       return res.redirect('/admin/posts')

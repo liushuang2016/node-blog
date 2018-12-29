@@ -12,22 +12,19 @@ import * as mongoose from "mongoose";
 import { limiter } from 'src/common/middleware/limit.middleware';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
+  let app = await NestFactory.create(AppModule, {
     logger: new MyLogger()
   })
+  // 频率限制
   app.use(limiter)
   // logger 打印
-  app.use(morgan('dev'))
+  if (process.env.NODE_ENV !== 'production') {
+    app.use(morgan('dev'))
+  }
   // 设置模板引擎为 ejs
   app.useStaticAssets(__dirname + '/public')
   app.setBaseViewsDir(__dirname + '/views')
   app.setViewEngine('ejs')
-
-  // 连接mongo
-  mongoose.connect(config.get('mongodb'), {
-    useNewUrlParser: true,
-    useCreateIndex: true
-  })
 
   app.use(flash())
   // session 中间件
@@ -38,7 +35,7 @@ async function bootstrap() {
     resave: true, // 强制更新 session
     saveUninitialized: false, // 设置为 false，强制创建一个 session，即使用户未登录
     cookie: {
-      maxAge: config.get('session.maxAge') // 过期时间，过期后 cookie 中的 session id 自动删除
+      maxAge: config.get('session.maxAge') // 过期时间
     },
     store: new mongoStore({// 将 session 存储到 mongodb
       url: config.get('mongodb') // mongodb 地址

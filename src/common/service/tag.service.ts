@@ -1,12 +1,18 @@
 import { Injectable } from "@nestjs/common";
-import { Tag } from "src/model/Tag";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
+import { TagInterface } from "src/model/Tag";
 
 @Injectable()
 export class TagService {
+  constructor(
+    @InjectModel('tag') private readonly tagModel: Model<TagInterface>
+  ) { }
+
   async saveTag(tag: string) {
     try {
       if (tag.length) {
-        await new Tag({ tag }).save()
+        await new this.tagModel({ tag }).save()
         return true
       }
     } catch (e) {
@@ -22,6 +28,6 @@ export class TagService {
   }
 
   async getTags() {
-    return await Tag.find()
+    return await this.tagModel.find()
   }
 }

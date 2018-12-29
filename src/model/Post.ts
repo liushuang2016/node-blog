@@ -2,7 +2,7 @@ import * as mongoose from "mongoose";
 
 const Schema = mongoose.Schema
 
-const PostSchema = new Schema({
+export const PostSchema = new Schema({
   author: { type: Schema.Types.ObjectId, required: true, ref: 'user' },
   title: { type: String, required: true, unique: true },
   content: { type: String, required: true },
@@ -14,4 +14,14 @@ const PostSchema = new Schema({
   _delete: { type: Boolean, default: false }
 })
 
-export const Post = mongoose.model('post', PostSchema)
+export interface PostInterface extends mongoose.Document {
+  author: string | any,
+  title: string,
+  content: string,
+  pv: number,
+  tags: string[],
+  ct: string,
+  ut: string,
+  commentsCount: number,
+  _delete: boolean
+}
