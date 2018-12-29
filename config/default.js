@@ -1,7 +1,7 @@
 module.exports = {
   port: 3000,
   session: {
-    secret: 'myblog',
+    secret: 'odjaoieuqio309829047!#%@*&^%$#',
     key: 'ss',
     maxAge: 1000 * 60 * 60 * 24 * 1
   },

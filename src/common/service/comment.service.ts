@@ -39,9 +39,8 @@ export class CommentService {
   }
 
   // 添加留言
-  async addComment(obj: any) {
+  async addComment(obj: any, user: any) {
     const userId = obj.author
-    const user = await User.findById(userId)
     // 非管理员有留言数量限制
     if (user['role'] !== 1) {
       // 获取该用户的留言数
@@ -55,7 +54,7 @@ export class CommentService {
       .replace(/</g, '&lt').replace(/>/g, '&gt')
       .replace(/\r\n/g, '<br>')
     // 换行过多
-    if (obj.content.split('<br>').length + 1 > 8) {
+    if (obj.content.split('<br>').length > 8) {
       throw new Error('留言行数太多')
     }
     await new Comment(obj).save()

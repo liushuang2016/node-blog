@@ -72,7 +72,7 @@ export class PostService {
       posts = await Post.find(query).sort({ _id: -1 })
       posts = posts.filter(post => {
         return post['tags'].indexOf(tag) !== -1
-      })
+      }).slice(this.postSize * (page - 1), this.postSize * page)
     } else {
       posts = await Post.find(query)
         .sort({ _id: -1 })
@@ -103,13 +103,8 @@ export class PostService {
 
   // 根据id更新文章
   async updateById(id: any, post: any) {
-    try {
-      post.ut = Date.now()
-      // post.commentsCount = await Comment.countDocuments({ postId: id })
-      await Post.updateOne({ _id: id }, post)
-    } catch (e) {
-      throw new BadRequestException(e.message)
-    }
+    post.ut = Date.now()
+    await Post.updateOne({ _id: id }, post)
   }
 
   // 新建文章

@@ -19,12 +19,18 @@ export class CommentController {
     @Body() commentDto: CommentDto,
     @Param() param: any,
     @Req() req: any,
-    @Res() res: Response,
-    @Query() query: any
+    @Res() res: Response
   ) {
     const postId = param.postId
-    const userId = req.session.user._id
-    const page = query.p || 1
+    const user = req.session.user
+    const userId = user._id
+    const page = req.query.p || 1
+    const content = commentDto.content
+
+    if (!content.trim()) {
+      req.flash('error', '评论不能为空')
+      return res.redirect(`/posts/${postId}?p=${page}#comments-container`)
+    }
 
     const comment = {
       postId,
@@ -33,8 +39,7 @@ export class CommentController {
     }
 
     try {
-      await this.commentService.addComment(comment)
-      // req.flash('success', '留言成功')
+      await this.commentService.addComment(comment, user)
       const commentsCount = await this.commentService.getCommentsCount({ postId })
       // 更新文章 commentsCount
       await this.postService.updateCommentsCount(postId, commentsCount)

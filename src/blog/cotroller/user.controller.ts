@@ -15,6 +15,7 @@ export class UserController {
     return {}
   }
 
+  // 登出
   @Get('/logout')
   logout(@Req() req: any, @Res() res: Response) {
     if (req.session.user) {
@@ -24,6 +25,7 @@ export class UserController {
     return res.redirect('/posts')
   }
 
+  // 登录、注册
   @Post('/login')
   async login(
     @Body() login: LoginDto,
@@ -32,7 +34,10 @@ export class UserController {
     @Query() query: any
   ) {
     login.name = login.name.trim()
-    login.password = login.password.trim()
+    if (!login.name) {
+      req.flash('error', '用户名不能为空')
+      return res.redirect('back')
+    }
     let user = await User.findOne({ name: login.name })
     // 用户名不存在则注册
     if (!user) {

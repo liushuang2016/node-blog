@@ -34,10 +34,10 @@ export class PostController {
   // 文章详情
   @Get('/posts/:postId')
   @Render('post')
-  async post(@Param() param, @Query() query: any, @Req() req: Request) {
+  async post(@Param() param, @Req() req: Request) {
     const postId = param.postId
     const path = req.path
-    const page = query.p || 1
+    const page = req.query.p || 1
 
     const post = await this.postService.findByIdToHtml(postId)
     const comments = await this.commentService.getComments(postId, page)
