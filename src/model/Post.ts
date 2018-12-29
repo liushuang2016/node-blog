@@ -25,3 +25,5 @@ export interface PostInterface extends mongoose.Document {
   commentsCount: number,
   _delete: boolean
 }
+
+export const PostModel = mongoose.model<PostInterface>('post', PostSchema)

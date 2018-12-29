@@ -16,3 +16,5 @@ export interface CommentInterface extends mongoose.Document {
   content: string,
   ct: string
 }
+
+export const CommentModel = mongoose.model<CommentInterface>('comment', CommentSchema)

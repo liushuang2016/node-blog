@@ -9,7 +9,19 @@ $(function () {
   replay(commentsContent)
   // 搜索功能
   search($search)
+  // highlight.js
+  highlight(commentsContent)
 })
+
+function highlight($ele) {
+  if (!$ele) {
+    return
+  }
+
+  $('pre code').each(function (i, block) {
+    hljs.highlightBlock(block);
+  });
+}
 
 function search($ele) {
   if (!$ele) {

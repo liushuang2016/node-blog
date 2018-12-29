@@ -10,3 +10,5 @@ export interface TagInterface extends mongoose.Document {
   tag: string,
   ct: string
 }
+
+export const TagModel = mongoose.model<TagInterface>('tag', TagSchema)

@@ -17,3 +17,5 @@ export interface UserInterface extends mongoose.Document {
   role: number,
   ct: string
 }
+
+export const UserModel = mongoose.model<UserInterface>('user', UserSchema)
