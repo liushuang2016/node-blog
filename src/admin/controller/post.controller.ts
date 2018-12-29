@@ -55,8 +55,6 @@ export class PostAdminController {
       await this.postService.addPost(post)
       // 保存tag
       await this.tagService.saveTags(tags)
-      // 创建成功后更新 getPosts
-      await this.postService.getPosts(true)
       req.flash('success', '发布成功')
       res.redirect('/admin/posts')
     } catch (e) {
@@ -80,11 +78,10 @@ export class PostAdminController {
     try {
       const post = await this.postService.getRawPostById(postId)
       const comments = await this.commentService.getComments(postId, page)
-      const commentsCount = await this.commentService.getCommentsCount({ postId })
-      const pageCount = Math.ceil(commentsCount / this.commentService.commentSize)
+      const pageCount = Math.ceil(post['commentsCount'] / this.commentService.commentSize)
       post['tags'] = post['tags'].join(' ')
 
-      return { post, comments, next: path, commentsCount, pageCount, page }
+      return { post, comments, next: path, pageCount, page }
     } catch (e) {
       req.flash('error', e.message)
       return res.redirect('/admin/posts')
@@ -112,8 +109,6 @@ export class PostAdminController {
       await this.tagService.saveTags(tags)
       // 更新文章
       await this.postService.updateById(postId, post)
-      // 创建成功后更新 getPosts
-      await this.postService.getPosts(true)
       req.flash('success', '更新成功')
       return res.redirect('/admin/posts')
     } catch (e) {
@@ -128,8 +123,6 @@ export class PostAdminController {
     const postId = param.postId
     try {
       await this.postService.delPostById(postId)
-      // 更新 getposts
-      await this.postService.getPosts(true)
       req.flash('success', '删除成功')
     } catch (e) {
       req.flash('error', e.message)

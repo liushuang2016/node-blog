@@ -17,7 +17,7 @@ export class CommentAdminController {
     @Param() param, @Req() req, @Res() res
   ) {
     const cid = param.commentId
-    const path = req.query.next
+    const next = req.query.next
     const page = req.query.p || 1
 
     try {
@@ -29,6 +29,6 @@ export class CommentAdminController {
     } catch (e) {
       req.flash('error', '删除失败')
     }
-    res.redirect(`${path}?p=${page}`)
+    res.redirect(`${next}?p=${page}`)
   }
 }
