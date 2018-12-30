@@ -39,12 +39,21 @@ export class PostController {
     const path = req.path
     const page = req.query.p || 1
     try {
-      const post = await this.postService.findByIdToHtml(postId)
+      const post = await this.postService.findOneToHtml(postId)
       const comments = await this.commentService.getComments(postId, page)
       // 留言的页数
       let pageCount: any = Math.ceil(post['commentsCount'] / this.commentService.commentSize)
 
-      return { post, comments, next: path, pageCount, page }
+      return {
+        post,
+        comments,
+        next: path,
+        pageCount,
+        page,
+        title: post.title + " - LiuShuang's Blog",
+        description: post.title,
+        keywords: post.tags.join(', ')
+      }
     } catch (e) {
       throw new BadRequestException(e.message)
     }

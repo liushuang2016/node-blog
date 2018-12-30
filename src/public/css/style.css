@@ -472,3 +472,7 @@ ul {
   max-width: 360px;
   margin: 0 auto;
 }
+
+.end {
+  margin-top: 16px;
+}

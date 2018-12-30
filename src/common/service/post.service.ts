@@ -5,6 +5,7 @@ import * as config from "config";
 import { InjectModel } from "@nestjs/mongoose";
 import { PostInterface } from 'src/model/Post';
 import { CommentInterface } from 'src/model/Comment';
+import * as mongoose from "mongoose";
 
 @Injectable()
 export class PostService {
@@ -15,14 +16,19 @@ export class PostService {
     @InjectModel('comment') private readonly commentModel: Model<CommentInterface>
   ) { }
 
-  // 通过id得到 marked 后的文章
-  async findByIdToHtml(id: any) {
+  // 得到 marked 后的文章
+  async findOneToHtml(id: any) {
     try {
-      let posts = await this.postModel.findById(id)
-      posts = posts.toObject()
-      if (posts._delete) {
+      let posts: PostInterface
+      if (mongoose.Types.ObjectId.isValid(id)) {
+        posts = await this.postModel.findById(id)
+      } else {
+        posts = await this.postModel.findOne({ title: id })
+      }
+      if (!posts || posts._delete) {
         throw new Error('文章不存在')
       }
+      posts = posts.toObject()
       // pv + 1, 如果不await则函数返回后，异步操作会失败
       await this.postModel.updateOne({ _id: posts._id }, { $inc: { pv: 1 } })
       posts.pv += 1
