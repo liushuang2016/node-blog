@@ -1,4 +1,6 @@
 static/img/
+node_modules.zip
+dist/
 
 config/*
 !config/default.*

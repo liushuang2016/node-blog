@@ -1,9 +1,9 @@
 import { Injectable, BadRequestException } from "@nestjs/common";
-import { format } from "src/common/utils";
+import { format } from "../utils";
 import * as config from "config";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { CommentInterface } from "src/model/Comment";
+import { CommentInterface } from "../../model/Comment";
 
 @Injectable()
 export class CommentService {

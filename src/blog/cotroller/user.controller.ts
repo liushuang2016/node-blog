@@ -1,10 +1,10 @@
 
 import { Controller, Get, Render, UseGuards, Req, Res, Body, Post, Query } from "@nestjs/common";
-import { NotLoginGuard } from "src/common/guard/checkNotLogin.guard";
+import { NotLoginGuard } from "../../common/guard/checkNotLogin.guard";
 import { Request, Response } from "express";
-import { LoginDto } from "src/blog/dto/login.dto";
+import { LoginDto } from "../dto/login.dto";
 import * as sha1 from "sha1";
-import { UserService } from "src/common/service/user.service";
+import { UserService } from "../../common/service/user.service";
 
 @Controller()
 export class UserController {

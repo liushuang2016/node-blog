@@ -1,20 +1,21 @@
-import { ValidationPipe } from 'src/common/pipe/validation.pipe';
+import { ValidationPipe } from './common/pipe/validation.pipe';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { AnyExceptionFilter } from 'src/common/filter/any-exception.filter';
-import { MyLogger } from 'src/common/logger/myLogger';
+import { AnyExceptionFilter } from './common/filter/any-exception.filter';
+import { MyLogger } from './common/logger/myLogger';
 import * as morgan from "morgan";
 import * as flash from "connect-flash";
 import * as session from "express-session";
 import * as config from "config";
 import * as MongoStore from "connect-mongo";
-import * as mongoose from "mongoose";
-import { limiter } from 'src/common/middleware/limit.middleware';
+import { limiter } from './common/middleware/limit.middleware';
+import * as path from 'path'
 
 async function bootstrap() {
   let app = await NestFactory.create(AppModule, {
     logger: new MyLogger()
   })
+  app.enable("trust proxy");
   // 频率限制
   app.use(limiter)
   // logger 打印
@@ -22,8 +23,8 @@ async function bootstrap() {
     app.use(morgan('dev'))
   }
   // 设置模板引擎为 ejs
-  app.useStaticAssets(__dirname + '/public')
-  app.setBaseViewsDir(__dirname + '/views')
+  app.useStaticAssets('public')
+  app.setBaseViewsDir('views')
   app.setViewEngine('ejs')
 
   app.use(flash())

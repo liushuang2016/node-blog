@@ -1,8 +1,8 @@
-import { UserService } from 'src/common/service/user.service';
+import { UserService } from '../../common/service/user.service';
 import { Controller, Get, Render, UseGuards, Param, Res, Req } from "@nestjs/common";
-import { AdminGuard } from 'src/common/guard/admin.guard';
+import { AdminGuard } from '../../common/guard/admin.guard';
 import { Response } from 'express';
-import { CommentService } from 'src/common/service/comment.service';
+import { CommentService } from '../../common/service/comment.service';
 
 @Controller('admin/users')
 @UseGuards(AdminGuard)

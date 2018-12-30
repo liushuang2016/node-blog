@@ -1,7 +1,7 @@
 import { Controller, Get, Res, Render, Param, Req, Query, NotFoundException, BadRequestException } from "@nestjs/common";
 import { Response, Request } from "express";
-import { PostService } from "src/common/service/post.service";
-import { CommentService } from "src/common/service/comment.service";
+import { PostService } from "../../common/service/post.service";
+import { CommentService } from "../../common/service/comment.service";
 
 @Controller()
 export class PostController {

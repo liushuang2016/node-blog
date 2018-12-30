@@ -1,10 +1,10 @@
-import { TagService } from 'src/common/service/tag.service';
-import { AdminGuard } from 'src/common/guard/admin.guard';
-import { PostService } from 'src/common/service/post.service';
+import { TagService } from '../../common/service/tag.service';
+import { AdminGuard } from '../../common/guard/admin.guard';
+import { PostService } from '../../common/service/post.service';
 import { Controller, Get, Render, Res, UseGuards, Post, Body, Req, Param } from "@nestjs/common";
 import { Response } from "express";
-import { PostDto } from 'src/admin/dto/post.dto';
-import { CommentService } from 'src/common/service/comment.service';
+import { PostDto } from '../../admin/dto/post.dto';
+import { CommentService } from '../../common/service/comment.service';
 
 @Controller('admin')
 @UseGuards(AdminGuard)

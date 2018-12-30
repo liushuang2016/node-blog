@@ -1,9 +1,9 @@
-import { CommentDto } from 'src/blog/dto/comment.dto';
-import { CommentService } from 'src/common/service/comment.service';
+import { CommentDto } from '../dto/comment.dto';
+import { CommentService } from '../../common/service/comment.service';
 import { Controller, Post, Param, Req, UseGuards, Body, Res, Query } from "@nestjs/common";
-import { LoginGuard } from 'src/common/guard/checkLogin.guard';
+import { LoginGuard } from '../../common/guard/checkLogin.guard';
 import { Response } from 'express';
-import { PostService } from 'src/common/service/post.service';
+import { PostService } from '../../common/service/post.service';
 
 @Controller()
 export class CommentController {

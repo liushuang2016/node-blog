@@ -1,5 +1,5 @@
 import { ExceptionFilter, Catch, ArgumentsHost } from '@nestjs/common';
-import { logger, httpErrorLogger } from 'src/common/logger/logger';
+import { logger, httpErrorLogger } from '../logger/logger';
 
 @Catch()
 export class AnyExceptionFilter implements ExceptionFilter {

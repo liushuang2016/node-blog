@@ -1,10 +1,10 @@
 import { Model } from 'mongoose';
 import { Injectable, BadRequestException } from "@nestjs/common";
-import { format, toMarked, markedToDir } from "src/common/utils";
+import { format, toMarked, markedToDir } from "../../common/utils";
 import * as config from "config";
 import { InjectModel } from "@nestjs/mongoose";
-import { PostInterface } from 'src/model/Post';
-import { CommentInterface } from 'src/model/Comment';
+import { PostInterface } from '../../model/Post';
+import { CommentInterface } from '../../model/Comment';
 import * as mongoose from "mongoose";
 
 @Injectable()
