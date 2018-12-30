@@ -3,11 +3,15 @@ import { Controller, Get, Render, UseGuards, Req, Res, Body, Post, Query } from 
 import { NotLoginGuard } from "src/common/guard/checkNotLogin.guard";
 import { Request, Response } from "express";
 import { LoginDto } from "src/blog/dto/login.dto";
-import { User } from "src/model/User";
 import * as sha1 from "sha1";
+import { UserService } from "src/common/service/user.service";
 
 @Controller()
 export class UserController {
+  constructor(
+    private readonly userService: UserService
+  ) { }
+
   @Get('/login')
   @Render('login')
   @UseGuards(NotLoginGuard)
@@ -34,26 +38,28 @@ export class UserController {
     @Query() query: any
   ) {
     login.name = login.name.trim()
+
     if (!login.name) {
       req.flash('error', '用户名不能为空')
       return res.redirect('back')
     }
-    let user = await User.findOne({ name: login.name })
+    let user = await this.userService.getUser({ name: login.name })
+
     // 用户名不存在则注册
     if (!user) {
-      user = new User({
+      user = await this.userService.addUser({
         name: login.name,
         password: sha1(login.password),
         ip: req.ip
       })
-      user = await user.save()
+
       req.flash('success', '注册成功')
     } else {
       if (user['password'] === sha1(login.password)) {
         req.flash('success', '登录成功')
       } else {
         req.flash('error', '用户名被占用或密码错误')
-        return res.redirect('back')
+        return res.redirect('/posts')
       }
     }
     req.session.user = user.toObject()

@@ -44,8 +44,8 @@ export class CommentController {
       // 更新文章 commentsCount
       await this.postService.updateCommentsCount(postId, commentsCount)
       // 翻页更新page
-      let page = Math.ceil(commentsCount / this.commentService.commentSize)
-      return res.redirect(`/posts/${postId}?p=${page}#comments`)
+      let nPage = Math.ceil(commentsCount / this.commentService.commentSize)
+      return res.redirect(`/posts/${postId}?p=${nPage}#comments`)
     } catch (e) {
       req.flash('error', e.message)
       return res.redirect(`/posts/${postId}?p=${page}#comments-container`)

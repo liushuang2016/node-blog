@@ -1,4 +1,4 @@
-import { Controller, Get, Res, Render, Param, Req, Query } from "@nestjs/common";
+import { Controller, Get, Res, Render, Param, Req, Query, NotFoundException, BadRequestException } from "@nestjs/common";
 import { Response, Request } from "express";
 import { PostService } from "src/common/service/post.service";
 import { CommentService } from "src/common/service/comment.service";
@@ -38,12 +38,15 @@ export class PostController {
     const postId = param.postId
     const path = req.path
     const page = req.query.p || 1
+    try {
+      const post = await this.postService.findByIdToHtml(postId)
+      const comments = await this.commentService.getComments(postId, page)
+      // 留言的页数
+      let pageCount: any = Math.ceil(post['commentsCount'] / this.commentService.commentSize)
 
-    const post = await this.postService.findByIdToHtml(postId)
-    const comments = await this.commentService.getComments(postId, page)
-    // 留言的页数
-    let pageCount: any = Math.ceil(post['commentsCount'] / this.commentService.commentSize)
-
-    return { post, comments, next: path, pageCount, page }
+      return { post, comments, next: path, pageCount, page }
+    } catch (e) {
+      throw new BadRequestException(e.message)
+    }
   }
 }

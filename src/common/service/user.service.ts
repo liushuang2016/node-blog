@@ -34,4 +34,19 @@ export class UserService {
       throw new Error('用户不存在')
     }
   }
+
+  // 新建用户
+  async addUser(user) {
+    return await new this.userModel(user).save()
+  }
+
+  // 根据id查询用户
+  async getUserById(id) {
+    return await this.userModel.findById(id)
+  }
+
+  // 查找用户
+  async getUser(query) {
+    return await this.userModel.findOne(query)
+  }
 }

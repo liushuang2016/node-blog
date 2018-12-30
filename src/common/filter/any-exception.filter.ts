@@ -1,5 +1,5 @@
 import { ExceptionFilter, Catch, ArgumentsHost } from '@nestjs/common';
-import { logger } from 'src/common/logger/logger';
+import { logger, httpErrorLogger } from 'src/common/logger/logger';
 
 @Catch()
 export class AnyExceptionFilter implements ExceptionFilter {
@@ -8,11 +8,10 @@ export class AnyExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse();
     const request = ctx.getRequest();
     // 不计入日志的错误码
-    const arr = [403, 404, 444]
+    const arr = [403, 404, 444, 400]
 
     if (arr.indexOf(exception.status) === -1) {
-      logger.error(exception)
-      console.log(exception)
+      httpErrorLogger(request, response, exception)
     }
 
     if (exception.status === 404) {

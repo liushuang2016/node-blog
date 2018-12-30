@@ -63,13 +63,12 @@ export class PostAdminController {
       } else {
         req.flash('error', e.message || e.errmsg)
       }
-      res.redirect('back')
+      res.redirect('/admin/posts')
     }
   }
 
   // 编辑文章页
   @Get('/posts/:postId/edit')
-  @Render('admin/edit')
   async editPage(@Param() param: any, @Req() req: any, @Res() res: Response) {
     const postId = param.postId
     const path = req.path
@@ -80,9 +79,9 @@ export class PostAdminController {
       const comments = await this.commentService.getComments(postId, page)
       const commentsCount = post['commentsCount']
       const pageCount = Math.ceil(commentsCount / this.commentService.commentSize)
-      post['tags'] = post['tags'].join(' ')
+      post['stringTags'] = post['tags'].join(' ')
 
-      return { post, comments, next: path, pageCount, page, commentsCount }
+      return res.render('admin/edit', { post, comments, next: path, pageCount, page, commentsCount })
     } catch (e) {
       req.flash('error', e.message)
       return res.redirect('/admin/posts')

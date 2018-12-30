@@ -16,16 +16,20 @@ export class CommentService {
 
   // 获取对应文章下的留言
   async getComments(postId: any, page = 1) {
-    let comments = await this.commentModel.find({ postId })
-      .skip((page - 1) * this.commentSize).limit(this.commentSize).populate('author')
+    let comments = []
+    try {
+      comments = await this.commentModel.find({ postId })
+        .skip((page - 1) * this.commentSize).limit(this.commentSize).populate('author')
 
-    comments = comments.map(comment => {
-      comment = comment.toObject()
-      delete comment.author.password
-      comment.ct = format(comment.ct)
-      return comment
-    })
-    return comments
+      comments = comments.map(comment => {
+        comment = comment.toObject()
+        comment.ct = format(comment.ct)
+        return comment
+      })
+      return comments
+    } catch (e) {
+      return []
+    }
   }
 
   // 获取用户的留言

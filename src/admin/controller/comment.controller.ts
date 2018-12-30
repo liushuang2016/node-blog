@@ -23,6 +23,9 @@ export class CommentAdminController {
     try {
       let comment = await this.commentService.delById(cid)
 
+      if (!comment) {
+        throw new Error('删除失败')
+      }
       // 更新文章 commentsCount 
       await this.postService.updateCommentsCount(comment['postId'])
       req.flash('success', '删除成功')
