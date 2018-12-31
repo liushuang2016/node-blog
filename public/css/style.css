@@ -320,12 +320,13 @@ ul {
   text-decoration: underline;
 }
 
-.post-dir .dir-h1 {
+.post-dir .dir-h1,
+.post-dir .dir-h2, {
   font-size: 16px;
   list-style: none;
 }
 
-.post-dir .dir-h2,
+
 .post-dir .dir-h3 {
   font-size: 14px;
   margin-left: 24px;
