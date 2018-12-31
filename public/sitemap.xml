@@ -9,13 +9,43 @@
 
 <url>
   <loc>http://liushuang.info/posts</loc>
-  <lastmod>2018-12-31T07:38:52+00:00</lastmod>
+  <lastmod>2018-12-31T15:01:00+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>http://liushuang.info/tags</loc>
-  <lastmod>2018-12-31T07:38:52+00:00</lastmod>
+  <lastmod>2018-12-31T15:01:00+00:00</lastmod>
   <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://liushuang.info/posts/5c2a2ae78de2047e561f3204</loc>
+  <lastmod>2018-12-31T15:01:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://liushuang.info/posts?tag=%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0</loc>
+  <lastmod>2018-12-31T15:01:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://liushuang.info/posts?tag=%E5%9B%BE%E8%A7%A3HTTP</loc>
+  <lastmod>2018-12-31T15:01:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://liushuang.info/login</loc>
+  <lastmod>2018-12-31T15:01:00+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://liushuang.info/register</loc>
+  <lastmod>2018-12-31T15:01:00+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://liushuang.info/login?next=/posts/5c2a2ae78de2047e561f3204</loc>
+  <lastmod>2018-12-31T15:01:00+00:00</lastmod>
+  <priority>0.64</priority>
 </url>
 
 
