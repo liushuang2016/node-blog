@@ -18,6 +18,10 @@ a:hover {
   text-decoration: none;
 }
 
+a:focus {
+  text-decoration: none;
+}
+
 p {
   margin: 0;
 }
@@ -197,6 +201,10 @@ ul {
 
 .social-icon {
   cursor: pointer;
+}
+
+.social-icon:focus {
+  text-decoration: none !important;
 }
 
 .social-icon .iconfont {
