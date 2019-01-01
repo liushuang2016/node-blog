@@ -46,7 +46,7 @@ export class PostAdminController {
     const post = {
       title: postDto.title,
       content: postDto.content,
-      tags: postDto.tags,
+      tags: tags,
       author: req.session.user._id
     }
 
