@@ -4,9 +4,7 @@
 }
 
 body {
-  height: 100%;
-  width: 100%;
-  font-family: -apple-system,Verdana,"PingFang SC","Helvetica Neue",Arial,"Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  font-family: -apple-system,"PingFang SC", Verdana, Geneva, Tahoma, 微软雅黑, "Helvetica Neue",Arial,"Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
   color: #656565;
 }
 
@@ -107,6 +105,28 @@ ul {
 .back-to:hover {
   color: #563d7c;
   text-decoration: none!important;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 2.5px rgba(0, 0, 0, .3);
+  box-shadow: inset 0 0 2.5px rgba(0, 0, 0, .3);
+  border-radius: 2.5px;
+  background-color: #294E80;
+  opacity: .7;
+  transition: opacity ease-in-out 200ms;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 2.5px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 2.5px rgba(0, 0, 0, 0.3);
+  border-radius: 2.5px;
+  background-color: #F5F5F5;
 }
 /* ---------- nav ---------- */
 
