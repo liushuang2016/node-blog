@@ -301,6 +301,32 @@ pre {
   transition: .2s;
 }
 
+.post-tag2 {
+  display: inline-block;
+  width: auto;
+  height: 22px;
+  padding: 0 8px;
+  font-size: 14px;
+  color: #a6abb2;
+  line-height: 22px;
+  box-sizing: border-box;
+  box-shadow: 0 0 0.6px #d5dae1;
+  border-radius: 2px;
+  background-color: #fafafa;
+  cursor: pointer;
+  margin-right: 2px;
+  transition: .2s;
+  color: #fff;
+  background-color: rgba(255,255,255,.26);
+  box-shadow: none;
+  margin-bottom: 8px;
+}
+
+.post-tag2:hover {
+  color: #fff;
+  background-color: rgba(255,255,255,.4);
+}
+
 .post-info {
   float: right;
   color: #a9b0bc;
