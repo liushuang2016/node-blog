@@ -29,10 +29,10 @@ ul {
   padding: 0;
 }
 
-.g-container {
-  max-width: 960px;
-  margin-left: auto;
-  margin-right: auto;
+pre {
+  padding: 0;
+  border: none;
+  background-color: transparent;
 }
 
 .text-c {
