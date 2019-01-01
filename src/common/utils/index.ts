@@ -34,10 +34,19 @@ export const format = (time: any, template = 'YY-MM-DD'): string => {
 }
 
 export const toMarked = (content: string, ops = {}): string => {
-  return marked(content, {
+  const renderer = new marked.Renderer()
+  marked.setOptions({
     headerIds: true,
     ...ops
   })
+  renderer.link = function (href, title, text) {
+    return '<a target="_blank" href="' + href + '" title="' + title + '">' + text + '</a>';
+  }
+  renderer.heading = function (text, level, raw) {
+    raw = raw.replace(/\s+/g, '-').replace('/^#+/', '')
+    return `<h${level} id=${raw}>${text}</h${level}>`
+  }
+  return marked(content, { renderer })
 }
 
 export const markedToDir = (content: string): string => {
@@ -46,8 +55,9 @@ export const markedToDir = (content: string): string => {
   }).map(line => {
     const arr = line.split(/\s+/)
     const n = arr.shift().length
-    const hash = arr.join(' ')
-    return `<li class="dir-item dir-h${n}"><a href="#${hash}">${hash}</a></li>`
+    const text = arr.join(' ')
+    const raw = text.replace(/\s+/g, '-').replace('/^#+/', '')
+    return `<li class="dir-item dir-h${n}"><a href="#${raw}">${text}</a></li>`
   })
 
   return arr.join(' ')

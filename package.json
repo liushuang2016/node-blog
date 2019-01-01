@@ -32,7 +32,7 @@
     "ejs": "^2.6.1",
     "express-rate-limit": "^3.3.2",
     "express-session": "^1.15.6",
-    "marked": "^0.4.0",
+    "marked": "^0.5.0",
     "mongoose": "^5.4.0",
     "morgan": "^1.9.1",
     "reflect-metadata": "^0.1.12",
