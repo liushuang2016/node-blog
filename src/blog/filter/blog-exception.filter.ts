@@ -1,8 +1,8 @@
 import { ExceptionFilter, Catch, ArgumentsHost } from '@nestjs/common';
-import { logger, httpErrorLogger } from '../logger/logger';
+import { httpErrorLogger } from '../../common/logger/logger';
 
 @Catch()
-export class AnyExceptionFilter implements ExceptionFilter {
+export class BlogExceptionFilter implements ExceptionFilter {
   catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
@@ -13,6 +13,7 @@ export class AnyExceptionFilter implements ExceptionFilter {
     if (arr.indexOf(exception.status) === -1) {
       httpErrorLogger(request, response, exception)
     }
+
 
     if (exception.status === 404) {
       response.render('404')

@@ -28,7 +28,6 @@ import * as config from "config";
     BlogModule,
     AdminModule
   ],
-  controllers: [],
   providers: [PostService, CommentService, TagService, UserService],
   exports: [PostService, CommentService, TagService, UserService]
 })

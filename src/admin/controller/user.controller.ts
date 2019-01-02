@@ -1,26 +1,38 @@
+import { AdminExceptionFilter } from './../filter/admin-exception.filter';
 import { UserService } from '../../common/service/user.service';
-import { Controller, Get, Render, UseGuards, Param, Res, Req } from "@nestjs/common";
+import { Controller, Get, Render, UseGuards, Param, Res, Req, Post, Body, UseFilters } from "@nestjs/common";
 import { AdminGuard } from '../../common/guard/admin.guard';
 import { Response } from 'express';
 import { CommentService } from '../../common/service/comment.service';
+import { ResJson } from '../dto/res.dto';
+
 
 @Controller('admin/users')
 @UseGuards(AdminGuard)
+@UseFilters(AdminExceptionFilter)
 export class UserAdminController {
   constructor(
     private readonly userService: UserService,
     private readonly commentService: CommentService
   ) { }
 
-  // 用户管理页
-  @Get()
-  @Render('admin')
-  async users() {
-    const users = await this.userService.getAllUsers()
-    return {
-      data: users,
-      render: 'users'
+  // 获取当前用户
+  @Get('/currentUser')
+  async getCurrentUser(@Req() req) {
+    let user = req.session.user
+    let u = {
+      _id: user._id,
+      name: user.name,
+      avatar: user.avatar
     }
+
+    return new ResJson({ data: u })
+  }
+
+  // 获取所有用户
+  async getAllUsers() {
+    let users = await this.userService.getAllUsers()
+    return new ResJson({ data: users })
   }
 
   // 删除用户

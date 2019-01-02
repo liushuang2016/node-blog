@@ -1,13 +1,16 @@
+import { AdminExceptionFilter } from './../filter/admin-exception.filter';
 import { TagService } from '../../common/service/tag.service';
 import { AdminGuard } from '../../common/guard/admin.guard';
 import { PostService } from '../../common/service/post.service';
-import { Controller, Get, Render, Res, UseGuards, Post, Body, Req, Param } from "@nestjs/common";
+import { Controller, Get, Render, Res, UseGuards, Post, Body, Req, Param, UseFilters } from "@nestjs/common";
 import { Response } from "express";
 import { PostDto } from '../../admin/dto/post.dto';
 import { CommentService } from '../../common/service/comment.service';
+import { ResJson } from '../dto/res.dto';
 
 @Controller('admin')
 @UseGuards(AdminGuard)
+@UseFilters(AdminExceptionFilter)
 export class PostAdminController {
   constructor(
     private readonly postService: PostService,
@@ -15,21 +18,13 @@ export class PostAdminController {
     private readonly commentService: CommentService
   ) { }
 
-  // 管理首页
-  @Get()
-  async index(@Res() res: Response) {
-    return res.redirect('/admin/posts')
-  }
-
-  // 管理文章页
-  @Get('/posts')
-  @Render('admin')
-  async posts() {
-    const posts = await this.postService.getPosts()
-    return {
-      data: posts,
-      render: 'posts'
-    }
+  // 获取所有文章
+  @Get('/posts/all')
+  async posts(@Req() req) {
+    const page = req.query.p || 1
+    const posts = await this.postService.getPostsUsePage(page)
+    const totalCount = await this.postService.getPostsCount()
+    return new ResJson({ data: { posts, totalCount } })
   }
 
   // 创建文章页

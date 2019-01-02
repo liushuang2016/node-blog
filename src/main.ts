@@ -1,7 +1,6 @@
 import { ValidationPipe } from './common/pipe/validation.pipe';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { AnyExceptionFilter } from './common/filter/any-exception.filter';
 import { MyLogger } from './common/logger/myLogger';
 import * as morgan from "morgan";
 import * as flash from "connect-flash";
@@ -13,7 +12,8 @@ import * as path from 'path'
 
 async function bootstrap() {
   let app = await NestFactory.create(AppModule, {
-    logger: new MyLogger()
+    logger: new MyLogger(),
+    cors: { credentials: true, origin: 'http://localhost:8000' }
   })
   app.enable("trust proxy");
   // 频率限制
@@ -53,8 +53,6 @@ async function bootstrap() {
     res.locals.error = req.flash('error').toString()
     next()
   })
-  // 异常过滤
-  app.useGlobalFilters(new AnyExceptionFilter())
   // 使用管道实现全局参数验证
   app.useGlobalPipes(new ValidationPipe())
 

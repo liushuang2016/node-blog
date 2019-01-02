@@ -1,11 +1,13 @@
+import { BlogExceptionFilter } from './../filter/blog-exception.filter';
 import { CommentDto } from '../dto/comment.dto';
 import { CommentService } from '../../common/service/comment.service';
-import { Controller, Post, Param, Req, UseGuards, Body, Res, Query } from "@nestjs/common";
+import { Controller, Post, Param, Req, UseGuards, Body, Res, Query, UseFilters } from "@nestjs/common";
 import { LoginGuard } from '../../common/guard/checkLogin.guard';
 import { Response } from 'express';
 import { PostService } from '../../common/service/post.service';
 
 @Controller()
+@UseFilters(BlogExceptionFilter)
 export class CommentController {
   constructor(
     private readonly commentService: CommentService,

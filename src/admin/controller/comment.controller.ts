@@ -1,10 +1,12 @@
-import { Controller, Get, Param, UseGuards, Req, Res } from "@nestjs/common";
+import { AdminExceptionFilter } from './../filter/admin-exception.filter';
+import { Controller, Get, Param, UseGuards, Req, Res, UseFilters } from "@nestjs/common";
 import { AdminGuard } from "../../common/guard/admin.guard";
 import { CommentService } from "../../common/service/comment.service";
 import { PostService } from "../../common/service/post.service";
 
 @Controller('admin/comments')
 @UseGuards(AdminGuard)
+@UseFilters(AdminExceptionFilter)
 export class CommentAdminController {
   constructor(
     private readonly commentService: CommentService,
