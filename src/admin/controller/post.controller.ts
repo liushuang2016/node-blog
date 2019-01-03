@@ -27,16 +27,9 @@ export class PostAdminController {
     return new ResJson({ data: { posts, totalCount } })
   }
 
-  // 创建文章页
-  @Get('/posts/create')
-  @Render('admin/create')
-  async createPage() {
-    return {}
-  }
-
   // 创建文章
   @Post('/posts/create')
-  async create(@Body() postDto: PostDto, @Req() req: any, @Res() res: Response) {
+  async create(@Body() postDto: PostDto, @Req() req: any) {
     const tags = postDto.tags.split(/\s+/)
     const post = {
       title: postDto.title,
@@ -45,21 +38,25 @@ export class PostAdminController {
       author: req.session.user._id
     }
 
+    let code = 200
+    let msg = ''
+
     try {
       // 新增文章
       await this.postService.addPost(post)
       // 保存tag
       await this.tagService.saveTags(tags)
-      req.flash('success', '发布成功')
-      res.redirect('/admin/posts')
+      msg = '发布成功'
     } catch (e) {
       if (e.code == 11000) {
-        req.flash('error', '文章标题重复')
+        msg = '文章标题重复'
+        code = 11000
       } else {
-        req.flash('error', e.message || e.errmsg)
+        msg = e.message || e.errmsg
+        code = 400
       }
-      res.redirect('/admin/posts')
     }
+    return new ResJson({ msg, code })
   }
 
   // 编辑文章页

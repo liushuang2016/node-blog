@@ -1,4 +1,4 @@
-import { ForbiddenException } from '@nestjs/common';
+import { ForbiddenException, UnauthorizedException } from '@nestjs/common';
 // 守卫有一个单独的责任。它们确定请求是否应该由路由处理程序处理。
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Observable } from 'rxjs';
@@ -13,7 +13,7 @@ export class AdminGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const user = request.session.user
     if (!user || user.role !== 1) {
-      throw new ForbiddenException('Forbidden')
+      throw new UnauthorizedException('登录过期')
     }
     return true
   }
