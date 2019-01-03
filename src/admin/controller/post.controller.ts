@@ -59,25 +59,24 @@ export class PostAdminController {
     return new ResJson({ msg, code })
   }
 
-  // 编辑文章页
+  // 获取文章内容
   @Get('/posts/:postId/edit')
-  async editPage(@Param() param: any, @Req() req: any, @Res() res: Response) {
+  async editPage(@Param() param: any, @Req() req: any) {
     const postId = param.postId
-    const path = req.path
-    const page = req.query.p || 1
+
+    let code = 200
+    let msg = ''
+    let data = null
 
     try {
       const post = await this.postService.getRawPostById(postId)
-      const comments = await this.commentService.getComments(postId, page)
-      const commentsCount = post['commentsCount']
-      const pageCount = Math.ceil(commentsCount / this.commentService.commentSize)
       post['stringTags'] = post['tags'].join(' ')
-
-      return res.render('admin/edit', { post, comments, next: path, pageCount, page, commentsCount })
+      data = post
     } catch (e) {
-      req.flash('error', e.message)
-      return res.redirect('/admin/posts')
+      code = 400
+      msg = e.message
     }
+    return new ResJson({ code, msg, data })
   }
 
   // 编辑文章
