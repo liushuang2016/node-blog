@@ -1,3 +1,4 @@
+import { TagAdminController } from './controller/tag.controller';
 import { LoginAdminCtroller } from './controller/login.controller';
 import { AdminExceptionFilter } from './filter/admin-exception.filter';
 import { Module, UseFilters } from "@nestjs/common";
@@ -7,6 +8,6 @@ import { CommentAdminController } from "./controller/comment.controller";
 import { APP_FILTER } from "@nestjs/core";
 
 @Module({
-  controllers: [PostAdminController, UserAdminController, CommentAdminController, LoginAdminCtroller]
+  controllers: [PostAdminController, UserAdminController, CommentAdminController, LoginAdminCtroller, TagAdminController]
 })
 export class AdminModule { }

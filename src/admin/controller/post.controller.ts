@@ -1,3 +1,4 @@
+import { UserService } from './../../common/service/user.service';
 import { AdminExceptionFilter } from './../filter/admin-exception.filter';
 import { TagService } from '../../common/service/tag.service';
 import { AdminGuard } from '../../common/guard/admin.guard';
@@ -15,8 +16,31 @@ export class PostAdminController {
   constructor(
     private readonly postService: PostService,
     private readonly tagService: TagService,
-    private readonly commentService: CommentService
+    private readonly commentService: CommentService,
+    private readonly userService: UserService
   ) { }
+
+  // 概览
+  @Get('/statistics')
+  async statistics() {
+    const arr = [
+      this.postService.getPostsCount(),
+      this.tagService.getTagsCount(),
+      this.commentService.getCommentsCount(),
+      this.userService.getUsersCount()
+    ]
+    return Promise.all(arr)
+      .then(values => {
+        return new ResJson({
+          data: {
+            postsCount: values[0],
+            tagsCount: values[1],
+            commentsCount: values[2],
+            usersCount: values[3]
+          }
+        })
+      })
+  }
 
   // 获取所有文章
   @Get('/posts/all')

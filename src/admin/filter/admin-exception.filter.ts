@@ -9,7 +9,7 @@ export class AdminExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse();
     const request = ctx.getRequest();
     // 不计入日志的错误码
-    const arr = [403, 404, 444, 400]
+    const arr = [403, 404, 444, 400, 401]
 
     if (arr.indexOf(exception.status) === -1) {
       httpErrorLogger(request, response, exception)

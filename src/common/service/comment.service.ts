@@ -14,12 +14,32 @@ export class CommentService {
     @InjectModel('comment') private readonly commentModel: Model<CommentInterface>
   ) { }
 
+  // 获取留言
+  async getAllComments(query = {}, page = 1) {
+    let comments = []
+    try {
+      comments = await this.commentModel.find(query)
+        .skip((page - 1) * this.commentSize).limit(this.commentSize)
+        .populate('author').populate('postId')
+
+      comments = comments.map(comment => {
+        comment = comment.toObject()
+        comment.ct = format(comment.ct)
+        return comment
+      })
+      return comments
+    } catch (e) {
+      return []
+    }
+  }
+
   // 获取对应文章下的留言
   async getComments(postId: any, page = 1) {
     let comments = []
     try {
       comments = await this.commentModel.find({ postId })
-        .skip((page - 1) * this.commentSize).limit(this.commentSize).populate('author')
+        .skip((page - 1) * this.commentSize).limit(this.commentSize)
+        .populate('author')
 
       comments = comments.map(comment => {
         comment = comment.toObject()
@@ -69,7 +89,7 @@ export class CommentService {
   }
 
   // 获取留言数量
-  async getCommentsCount(obj: any) {
+  async getCommentsCount(obj = {}) {
     return await this.commentModel.countDocuments(obj)
   }
 
