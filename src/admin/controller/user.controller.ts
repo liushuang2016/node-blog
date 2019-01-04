@@ -1,6 +1,6 @@
 import { AdminExceptionFilter } from './../filter/admin-exception.filter';
 import { UserService } from '../../common/service/user.service';
-import { Controller, Get, Render, UseGuards, Param, Res, Req, Post, Body, UseFilters } from "@nestjs/common";
+import { Controller, Get, Render, UseGuards, Param, Res, Req, Post, Body, UseFilters, Query } from "@nestjs/common";
 import { AdminGuard } from '../../common/guard/admin.guard';
 import { Response } from 'express';
 import { CommentService } from '../../common/service/comment.service';
@@ -30,22 +30,29 @@ export class UserAdminController {
   }
 
   // 获取所有用户
-  async getAllUsers() {
-    let users = await this.userService.getAllUsers()
-    return new ResJson({ data: users })
+  @Get('/all')
+  async getAllUsers(@Query() query) {
+    const page = query.p || 1
+
+    let users = await this.userService.getAllUsers(page)
+    let usersCount = await this.userService.getUsersCount()
+    return new ResJson({ data: { users, totalCount: usersCount } })
   }
 
   // 删除用户
   @Get('/:userId/delete')
-  async delUser(@Param() param, @Res() res: Response, @Req() req: any) {
+  async delUser(@Param() param) {
     const userId = param.userId
+    let code = 200
+    let msg = ''
     try {
       await this.userService.delUserById(userId)
-      req.flash('success', '删除成功')
+      msg = '删除成功'
     } catch (e) {
-      req.flash('error', '删除失败')
+      code = 400
+      msg = '删除失败'
     }
-    res.redirect('/admin/users')
+    return new ResJson({ code, msg })
   }
 
   // 用户评论管理

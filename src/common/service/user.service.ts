@@ -7,13 +7,17 @@ import { CommentInterface } from '../../model/Comment';
 
 @Injectable()
 export class UserService {
+  public readonly pageSize = 12
+
   constructor(
     @InjectModel('user') private readonly userModel: Model<UserInterface>,
     @InjectModel('comment') private readonly commentModel: Model<CommentInterface>
   ) { }
 
-  async getAllUsers() {
-    let users = await this.userModel.find()
+  async getAllUsers(page = 1) {
+    let users = await this.userModel
+      .find().skip((page - 1) * this.pageSize).limit(this.pageSize)
+
     let promiseUsers = users.map(async user => {
       user = user.toObject()
       user.ct = format(user.ct)
@@ -48,5 +52,10 @@ export class UserService {
   // 查找用户
   async getUser(query) {
     return await this.userModel.findOne(query)
+  }
+
+  // 获取用户数
+  async getUsersCount() {
+    return await this.userModel.countDocuments()
   }
 }

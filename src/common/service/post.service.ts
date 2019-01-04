@@ -90,6 +90,7 @@ export class PostService {
       post = post.toObject()
       // 获取文章首段作为摘要
       post['excerpt'] = post.content.split('\r\n')[0]
+      post['contentLength'] = post.content.length
       delete post.content
       post.ct = format(post.ct)
       post.ut = format(post.ut)

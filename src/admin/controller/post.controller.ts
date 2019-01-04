@@ -83,8 +83,7 @@ export class PostAdminController {
   @Post('/posts/:postId/edit')
   async edit(
     @Param() param: any,
-    @Body() postDto: PostDto,
-    @Req() req: any
+    @Body() postDto: PostDto
   ) {
     const postId = param.postId
     const tags = postDto.tags.split(/\s+/)
@@ -115,14 +114,17 @@ export class PostAdminController {
 
   // 删除文章
   @Get('/posts/:postId/delete')
-  async deletePost(@Param() param, @Res() res: Response, @Req() req: any) {
+  async deletePost(@Param() param) {
     const postId = param.postId
+    let code = 200
+    let msg = ''
     try {
       await this.postService.delPostById(postId)
-      req.flash('success', '删除成功')
+      msg = '删除成功'
     } catch (e) {
-      req.flash('error', e.message)
+      code = 400
+      msg = e.message
     }
-    res.redirect('/admin/posts')
+    return new ResJson({ msg, code })
   }
 }
