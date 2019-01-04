@@ -84,8 +84,7 @@ export class PostAdminController {
   async edit(
     @Param() param: any,
     @Body() postDto: PostDto,
-    @Req() req: any,
-    @Res() res: Response
+    @Req() req: any
   ) {
     const postId = param.postId
     const tags = postDto.tags.split(/\s+/)
@@ -95,17 +94,23 @@ export class PostAdminController {
       tags: tags
     }
 
+    let msg = ''
+    let code = 200
+
     try {
       // 保存tag
       await this.tagService.saveTags(tags)
       // 更新文章
       await this.postService.updateById(postId, post)
-      req.flash('success', '更新成功')
-      return res.redirect('/admin/posts')
+      msg = '更新成功'
     } catch (e) {
-      req.flash('error', e.message)
-      return res.redirect('back')
+      msg = e.message
+      code = 400
+      if (e.code === 11000) {
+        msg = '标题重复'
+      }
     }
+    return new ResJson({ msg, code })
   }
 
   // 删除文章
