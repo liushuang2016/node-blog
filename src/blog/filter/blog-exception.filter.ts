@@ -14,7 +14,6 @@ export class BlogExceptionFilter implements ExceptionFilter {
       httpErrorLogger(request, response, exception)
     }
 
-
     if (exception.status === 404) {
       response.render('404')
       // dto 验证错误
