@@ -135,7 +135,7 @@ pre {
   display: flex;
   height: 420px;
   clear: both;
-  background-image: url('/img/site/bg4-s.jpg');
+  background-image: url('https://blog-1253581643.file.myqcloud.com/img/site/bg4-s.jpg');
   background-size: cover;
   background-position: center;
   color: #eee;
@@ -145,7 +145,7 @@ pre {
 
 .header-nav-post {
   height: 360px;
-  background-image: url('/img/site/post-bg.svg');
+  background-image: url('https://blog-1253581643.file.myqcloud.com/img/site/post-bg.jpg');
   background-size: auto;
   background-repeat: repeat;
   background-color: #1494fb;
