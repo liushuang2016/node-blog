@@ -14,7 +14,7 @@ import * as path from 'path'
 async function bootstrap() {
   let app = await NestFactory.create(AppModule, {
     logger: new MyLogger(),
-    cors: { credentials: true, origin: 'http://localhost:8000' }
+    cors: true
   })
   app.enable("trust proxy");
   // 频率限制
