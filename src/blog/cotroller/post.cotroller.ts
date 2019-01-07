@@ -4,8 +4,7 @@ import { Response, Request } from "express";
 import { PostService } from "../../common/service/post.service";
 import { CommentService } from "../../common/service/comment.service";
 
-@Controller()
-@UseFilters(BlogExceptionFilter)
+@Controller('/')
 export class PostController {
   constructor(
     private readonly postService: PostService,

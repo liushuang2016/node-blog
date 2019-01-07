@@ -7,7 +7,6 @@ import { ResJson } from '../dto/res.dto';
 
 @Controller('admin/comments')
 @UseGuards(AdminGuard)
-@UseFilters(AdminExceptionFilter)
 export class CommentAdminController {
   constructor(
     private readonly commentService: CommentService,

@@ -7,7 +7,6 @@ import * as sha1 from "sha1";
 
 
 @Controller('/admin/users')
-@UseFilters(AdminExceptionFilter)
 export class LoginAdminCtroller {
   constructor(
     private readonly userService: UserService

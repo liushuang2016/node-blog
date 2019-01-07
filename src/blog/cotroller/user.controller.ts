@@ -8,7 +8,6 @@ import * as sha1 from "sha1";
 import { UserService } from "../../common/service/user.service";
 
 @Controller()
-@UseFilters(BlogExceptionFilter)
 export class UserController {
   constructor(
     private readonly userService: UserService

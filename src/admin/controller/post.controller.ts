@@ -11,7 +11,6 @@ import { ResJson } from '../dto/res.dto';
 
 @Controller('admin')
 @UseGuards(AdminGuard)
-@UseFilters(AdminExceptionFilter)
 export class PostAdminController {
   constructor(
     private readonly postService: PostService,

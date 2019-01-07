@@ -9,7 +9,6 @@ import { ResJson } from '../dto/res.dto';
 
 @Controller('admin/users')
 @UseGuards(AdminGuard)
-@UseFilters(AdminExceptionFilter)
 export class UserAdminController {
   constructor(
     private readonly userService: UserService,

@@ -10,7 +10,6 @@ import { ResJson } from '../dto/res.dto';
 
 @Controller('admin/tags')
 @UseGuards(AdminGuard)
-@UseFilters(AdminExceptionFilter)
 export class TagAdminController {
   constructor(
     private readonly tagService: TagService

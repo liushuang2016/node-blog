@@ -7,7 +7,6 @@ import { Response } from 'express';
 import { PostService } from '../../common/service/post.service';
 
 @Controller()
-@UseFilters(BlogExceptionFilter)
 export class CommentController {
   constructor(
     private readonly commentService: CommentService,

@@ -1,3 +1,4 @@
+import { AnyExceptionFilter } from './common/filter/any-exception.filter';
 import { ValidationPipe } from './common/pipe/validation.pipe';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
@@ -55,6 +56,8 @@ async function bootstrap() {
   })
   // 使用管道实现全局参数验证
   app.useGlobalPipes(new ValidationPipe())
+  // 全局异常过滤
+  app.useGlobalFilters(new AnyExceptionFilter())
 
   await app.listen(3000)
 }
