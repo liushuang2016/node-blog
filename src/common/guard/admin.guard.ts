@@ -13,7 +13,7 @@ export class AdminGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const user = request.session.user
     if (!user || user.role !== 1) {
-      throw new UnauthorizedException('登录过期')
+      throw new UnauthorizedException('Forbidden')
     }
     return true
   }
