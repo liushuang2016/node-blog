@@ -1,5 +1,6 @@
+import { ResJson } from './../../admin/dto/res.dto';
 import { ExceptionFilter, Catch, ArgumentsHost } from '@nestjs/common';
-import { logger, httpErrorLogger } from '../logger/logger';
+import { httpErrorLogger } from '../logger/logger';
 
 @Catch()
 export class AnyExceptionFilter implements ExceptionFilter {
@@ -14,24 +15,32 @@ export class AnyExceptionFilter implements ExceptionFilter {
       httpErrorLogger(request, response, exception)
     }
 
-    if (exception.status === 404) {
-      response.render('404')
-      // dto 验证错误
-    } else if (exception.status === 444) {
-      request.flash('error', exception.message.message)
-      response.redirect('back')
+    let message = ''
+    if (exception.message) {
+      message = typeof exception.message === 'string'
+        ? exception.message
+        : exception.message.message
     } else {
-      let message = ''
-      if (exception.message) {
-        message = typeof exception.message === 'string'
-          ? exception.message
-          : exception.message.message
-      } else {
-        message = exception.ValidationError
-      }
-      request.flash('error', message)
-      response.redirect('/posts')
+      message = exception.ValidationError
     }
 
+    if (request.path.match(/^\/admin/)) {
+      response
+        .json(new ResJson({
+          code: exception.status,
+          msg: message,
+        }))
+    } else {
+      if (exception.status === 404) {
+        response.render('404')
+        // dto 验证错误
+      } else if (exception.status === 444) {
+        request.flash('error', exception.message.message)
+        response.redirect('back')
+      } else {
+        request.flash('error', message)
+        response.redirect('/posts')
+      }
+    }
   }
 }

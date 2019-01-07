@@ -1,9 +1,10 @@
-import { Controller, Get, Res, Render, Param, Req, Query, NotFoundException, BadRequestException } from "@nestjs/common";
+import { BlogExceptionFilter } from './../filter/blog-exception.filter';
+import { Controller, Get, Res, Render, Param, Req, Query, NotFoundException, BadRequestException, UseFilters } from "@nestjs/common";
 import { Response, Request } from "express";
 import { PostService } from "../../common/service/post.service";
 import { CommentService } from "../../common/service/comment.service";
 
-@Controller()
+@Controller('/')
 export class PostController {
   constructor(
     private readonly postService: PostService,

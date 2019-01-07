@@ -78,24 +78,20 @@ export class PostService {
   // 分页获取文章
   async getPostsUsePage(page = 1, tag?: string) {
     let query = { _delete: false }
-    let posts = []
-
     if (tag) {
-      posts = await this.postModel.find(query).sort({ _id: -1 })
-      posts = posts.filter(post => {
-        return post.tags.indexOf(tag) !== -1
-      }).slice(this.postSize * (page - 1), this.postSize * page)
-    } else {
-      posts = await this.postModel.find(query)
-        .sort({ _id: -1 })
-        .skip(this.postSize * (page - 1)).limit(this.postSize)
+      query['tags'] = tag
     }
+
+    let posts = await this.postModel.find(query)
+      .sort({ _id: -1 })
+      .skip(this.postSize * (page - 1)).limit(this.postSize)
 
     posts = posts.map(post => {
       post = post.toObject()
       // 获取文章首段作为摘要
-      post.excerpt = post.content.split('\r\n')[0]
-      // post.commentsCount = await Comment.countDocuments({ postId: post._id })
+      post['excerpt'] = post.content.split('\r\n')[0]
+      post['contentLength'] = post.content.length
+      delete post.content
       post.ct = format(post.ct)
       post.ut = format(post.ut)
       return post

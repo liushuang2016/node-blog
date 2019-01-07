@@ -1,4 +1,5 @@
-import { Controller, Get, Render } from "@nestjs/common";
+import { BlogExceptionFilter } from './../filter/blog-exception.filter';
+import { Controller, Get, Render, UseFilters } from "@nestjs/common";
 import { TagService } from "../../common/service/tag.service";
 
 @Controller('tags')

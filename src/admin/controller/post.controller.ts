@@ -1,10 +1,13 @@
+import { UserService } from './../../common/service/user.service';
+import { AdminExceptionFilter } from './../filter/admin-exception.filter';
 import { TagService } from '../../common/service/tag.service';
 import { AdminGuard } from '../../common/guard/admin.guard';
 import { PostService } from '../../common/service/post.service';
-import { Controller, Get, Render, Res, UseGuards, Post, Body, Req, Param } from "@nestjs/common";
+import { Controller, Get, Render, Res, UseGuards, Post, Body, Req, Param, UseFilters } from "@nestjs/common";
 import { Response } from "express";
 import { PostDto } from '../../admin/dto/post.dto';
 import { CommentService } from '../../common/service/comment.service';
+import { ResJson } from '../dto/res.dto';
 
 @Controller('admin')
 @UseGuards(AdminGuard)
@@ -12,36 +15,44 @@ export class PostAdminController {
   constructor(
     private readonly postService: PostService,
     private readonly tagService: TagService,
-    private readonly commentService: CommentService
+    private readonly commentService: CommentService,
+    private readonly userService: UserService
   ) { }
 
-  // 管理首页
-  @Get()
-  async index(@Res() res: Response) {
-    return res.redirect('/admin/posts')
+  // 概览
+  @Get('/statistics')
+  async statistics() {
+    const arr = [
+      this.postService.getPostsCount(),
+      this.tagService.getTagsCount(),
+      this.commentService.getCommentsCount(),
+      this.userService.getUsersCount()
+    ]
+    return Promise.all(arr)
+      .then(values => {
+        return new ResJson({
+          data: {
+            postsCount: values[0],
+            tagsCount: values[1],
+            commentsCount: values[2],
+            usersCount: values[3]
+          }
+        })
+      })
   }
 
-  // 管理文章页
-  @Get('/posts')
-  @Render('admin')
-  async posts() {
-    const posts = await this.postService.getPosts()
-    return {
-      data: posts,
-      render: 'posts'
-    }
-  }
-
-  // 创建文章页
-  @Get('/posts/create')
-  @Render('admin/create')
-  async createPage() {
-    return {}
+  // 获取所有文章
+  @Get('/posts/all')
+  async posts(@Req() req) {
+    const page = req.query.p || 1
+    const posts = await this.postService.getPostsUsePage(page)
+    const totalCount = await this.postService.getPostsCount()
+    return new ResJson({ data: { posts, totalCount } })
   }
 
   // 创建文章
   @Post('/posts/create')
-  async create(@Body() postDto: PostDto, @Req() req: any, @Res() res: Response) {
+  async create(@Body() postDto: PostDto, @Req() req: any) {
     const tags = postDto.tags.split(/\s+/)
     const post = {
       title: postDto.title,
@@ -50,51 +61,52 @@ export class PostAdminController {
       author: req.session.user._id
     }
 
+    let code = 200
+    let msg = ''
+
     try {
       // 新增文章
       await this.postService.addPost(post)
       // 保存tag
       await this.tagService.saveTags(tags)
-      req.flash('success', '发布成功')
-      res.redirect('/admin/posts')
+      msg = '发布成功'
     } catch (e) {
       if (e.code == 11000) {
-        req.flash('error', '文章标题重复')
+        msg = '文章标题重复'
+        code = 11000
       } else {
-        req.flash('error', e.message || e.errmsg)
+        msg = e.message || e.errmsg
+        code = 400
       }
-      res.redirect('/admin/posts')
     }
+    return new ResJson({ msg, code })
   }
 
-  // 编辑文章页
+  // 获取文章内容
   @Get('/posts/:postId/edit')
-  async editPage(@Param() param: any, @Req() req: any, @Res() res: Response) {
+  async editPage(@Param() param: any, @Req() req: any) {
     const postId = param.postId
-    const path = req.path
-    const page = req.query.p || 1
+
+    let code = 200
+    let msg = ''
+    let data = null
 
     try {
       const post = await this.postService.getRawPostById(postId)
-      const comments = await this.commentService.getComments(postId, page)
-      const commentsCount = post['commentsCount']
-      const pageCount = Math.ceil(commentsCount / this.commentService.commentSize)
       post['stringTags'] = post['tags'].join(' ')
-
-      return res.render('admin/edit', { post, comments, next: path, pageCount, page, commentsCount })
+      data = post
     } catch (e) {
-      req.flash('error', e.message)
-      return res.redirect('/admin/posts')
+      code = 400
+      msg = e.message
     }
+    return new ResJson({ code, msg, data })
   }
 
   // 编辑文章
   @Post('/posts/:postId/edit')
   async edit(
     @Param() param: any,
-    @Body() postDto: PostDto,
-    @Req() req: any,
-    @Res() res: Response
+    @Body() postDto: PostDto
   ) {
     const postId = param.postId
     const tags = postDto.tags.split(/\s+/)
@@ -104,29 +116,38 @@ export class PostAdminController {
       tags: tags
     }
 
+    let msg = ''
+    let code = 200
+
     try {
       // 保存tag
       await this.tagService.saveTags(tags)
       // 更新文章
       await this.postService.updateById(postId, post)
-      req.flash('success', '更新成功')
-      return res.redirect('/admin/posts')
+      msg = '更新成功'
     } catch (e) {
-      req.flash('error', e.message)
-      return res.redirect('back')
+      msg = e.message
+      code = 400
+      if (e.code === 11000) {
+        msg = '标题重复'
+      }
     }
+    return new ResJson({ msg, code })
   }
 
   // 删除文章
   @Get('/posts/:postId/delete')
-  async deletePost(@Param() param, @Res() res: Response, @Req() req: any) {
+  async deletePost(@Param() param) {
     const postId = param.postId
+    let code = 200
+    let msg = ''
     try {
       await this.postService.delPostById(postId)
-      req.flash('success', '删除成功')
+      msg = '删除成功'
     } catch (e) {
-      req.flash('error', e.message)
+      code = 400
+      msg = e.message
     }
-    res.redirect('/admin/posts')
+    return new ResJson({ msg, code })
   }
 }
