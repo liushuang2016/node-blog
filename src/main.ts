@@ -50,6 +50,7 @@ async function bootstrap() {
     res.locals.next = ''
     res.locals.description = ''
     res.locals.keywords = ''
+    res.locals.cdnUrl = 'https://blog-1253581643.file.myqcloud.com'
     res.locals.success = req.flash('success').toString()
     res.locals.error = req.flash('error').toString()
     next()
