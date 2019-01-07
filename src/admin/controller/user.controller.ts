@@ -53,21 +53,4 @@ export class UserAdminController {
     }
     return new ResJson({ code, msg })
   }
-
-  // 用户评论管理
-  @Get('/:userId/comments')
-  async userComments(@Param() param, @Req() req, @Res() res) {
-    const userId = param.userId
-    const page = req.query.p || 1
-    const path = req.path
-    try {
-      const comments = await this.commentService.getCommentsByUserId(userId, page)
-      const commentsCount = await this.commentService.getCommentsCount({ author: userId })
-      const pageCount = Math.ceil(commentsCount / this.commentService.commentSize)
-      return res.render('admin/users-comments', { comments, commentsCount, pageCount, page, next: path })
-    } catch (e) {
-      req.flash('error', '用户不存在')
-      return res.redirect('/admin/users')
-    }
-  }
 }
