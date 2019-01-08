@@ -22,7 +22,7 @@ export class LoginAdminCtroller {
       if (user.password === sha1(loginDto.password)) {
         req.session.user = user
         // 过期时间
-        const n = 1000 * 60 * 60 * 1
+        const n = 1000 * 60 * 60 * 2
         req.session.cookie.expires = new Date(Date.now() + n)
       } else {
         msg = '密码错误'
