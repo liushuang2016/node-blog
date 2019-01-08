@@ -50,7 +50,7 @@ export const toMarked = (content: string, ops = {}): string => {
 }
 
 export const markedToDir = (content: string): string => {
-  const arr = content.split('\r\n').filter(line => {
+  const arr = content.split(/[\r\n]\n/).filter(line => {
     return line[0] === '#'
   }).map(line => {
     const arr = line.split(/\s+/)
