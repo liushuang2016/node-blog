@@ -154,7 +154,6 @@ scrollbar-track {
 
 .header-nav, .header-nav-post {
   position: relative;
-  display: flex;
   height: 420px;
   clear: both;
   background-image: url('https://blog-1253581643.file.myqcloud.com/img/site/bg4-s.jpg');

@@ -45,7 +45,7 @@ function search($ele) {
       var val = $s.find('input').val()
       if (val) {
         val = val.trim().replace(/\s+/, '+')
-        window.open(`https://www.google.com/search?hl=zh-CN&q=site:liushuang.info+${val}`)
+        window.open('https://www.google.com/search?hl=zh-CN&q=site:liushuang.info' + val)
       }
     }
   })
