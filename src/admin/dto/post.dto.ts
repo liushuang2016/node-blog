@@ -2,8 +2,8 @@ import { IsString, Length } from "class-validator";
 
 export class PostDto {
   @IsString()
-  @Length(3, 20, {
-    message: '文章标题请限制在3-12位'
+  @Length(3, 40, {
+    message: '文章标题请限制在3-40位'
   })
   title: string;
 
