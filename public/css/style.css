@@ -332,6 +332,14 @@ pre {
   line-height: 22px;
 }
 
+@media (max-width: 600px) {
+  .post-info {
+    float: none;
+    clear: both;
+    padding-top: 4px;
+  }
+}
+
 /* --- post-dir ---*/
 .post-dir {
   position: relative;
