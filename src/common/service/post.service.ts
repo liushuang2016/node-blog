@@ -132,6 +132,12 @@ export class PostService {
 
   // 获取文章数量
   async getPostsCount(tag?: string) {
-    return await this.postModel.countDocuments({ _delete: false, tags: tag })
+    let query = {
+      _delete: false
+    }
+    if (tag) {
+      query['tags'] = tag
+    }
+    return await this.postModel.countDocuments(query)
   }
 }
