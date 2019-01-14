@@ -1,26 +1,29 @@
-<div class="post-content padding-tb container">
-  <div class="row">
-    <div class="col-md-9 col-sm-12 col-xs-12">
-      <div class="markdown-body">
-        <%- post.content %>
+<div style="background-color: #f5f5d5;">
+  <div class="post-content padding-tb container">
+    <div class="row">
+      <div class="col-md-9 col-sm-12 col-xs-12">
+        <div class="markdown-body">
+          <%- post.content %>
+        </div>
+        <div class="end">
+          (END)
+        </div>
       </div>
-      <div class="end">
-        (END)
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="post-dir" id="post-dir">
-        <!-- <div class="dir-title">目录</div> -->
-        <ul>
-          <%- post.dir %>
-        </ul>
-        <a class="back-to" href="#top">
-          返回顶部
-        </a>
-        <a class="back-to" href="#comments-container">
-          去留言
-        </a>
+      <div class="col-md-3">
+        <div class="post-dir" id="post-dir">
+          <!-- <div class="dir-title">目录</div> -->
+          <ul>
+            <%- post.dir %>
+          </ul>
+          <a class="back-to" href="#top">
+            返回顶部
+          </a>
+          <a class="back-to" href="#comments-container">
+            去留言
+          </a>
+        </div>
       </div>
     </div>
   </div>
+  <%- include('comments.ejs') %>
 </div>
