@@ -58,23 +58,6 @@ export class PostService {
     }
   }
 
-  // 获取所有文章
-  async getPosts(update = false) {
-    // 按时间降序排列
-    let posts = await this.postModel.find({ _delete: false }).sort({ _id: -1 })
-
-    posts = posts.map(post => {
-      post = post.toObject()
-      // 获取文章首段作为摘要
-      post['excerpt'] = post.content.split(/[\r\n]\n|\n/)[0]
-      // post.commentsCount = await Comment.countDocuments({ postId: post._id })
-      post.ct = format(post.ct)
-      post.ut = format(post.ut)
-      return post
-    })
-    return posts
-  }
-
   // 分页获取文章
   async getPostsUsePage(page = 1, tag?: string) {
     let query = { _delete: false }
@@ -90,7 +73,8 @@ export class PostService {
       post = post.toObject()
       // 获取文章首段作为摘要
       post['excerpt'] = post.content.split(/[\r\n]\n|\n/)[0]
-        .replace(/\[/g, '').replace(/\]/g, '').replace(/\(\S+\)/g, '')
+        .replace(/\[/g, '').replace(/\]/g, '')
+        .replace(/\(\S+\)/g, '').replace(/`/g, '')
       post['contentLength'] = post.content.length
       delete post.content
       post.ct = format(post.ct)
@@ -148,12 +132,6 @@ export class PostService {
 
   // 获取文章数量
   async getPostsCount(tag?: string) {
-    if (tag) {
-      const posts = await this.postModel.find({ _delete: false })
-      return posts.filter(post => {
-        return post.tags.indexOf(tag) !== -1
-      }).length
-    }
-    return await this.postModel.countDocuments({ _delete: false })
+    return await this.postModel.countDocuments({ _delete: false, tags: tag })
   }
 }

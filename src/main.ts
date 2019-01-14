@@ -9,7 +9,6 @@ import * as session from "express-session";
 import * as config from "config";
 import * as MongoStore from "connect-mongo";
 import { limiter } from './common/middleware/limit.middleware';
-import * as path from 'path'
 
 async function bootstrap() {
   let app = await NestFactory.create(AppModule, {
