@@ -29,6 +29,7 @@ function search($ele) {
   }
 
   var $s = $('#input-search')
+  var $icon = $('#icon-search')
   $ele.on('click', function (e) {
     if ($s.hasClass('hidden')) {
       $s.removeClass('hidden fadeOut').addClass('fadeIn')
@@ -42,12 +43,11 @@ function search($ele) {
 
   $s.on('keyup', function (e) {
     if (e.keyCode === 13) {
-      var val = $s.find('input').val()
-      if (val) {
-        val = val.trim().replace(/\s+/, '+')
-        window.open('https://www.google.com/search?hl=zh-CN&q=site:www.liushuang.info+' + val)
-      }
+      ToSearch($s)
     }
+  })
+  $icon.on('click', function (e) {
+    ToSearch($s)
   })
 }
 
@@ -98,4 +98,12 @@ function toFixed($ele) {
 
 function toRelative($ele) {
   $ele.css('position', 'relative')
+}
+
+function ToSearch($ele) {
+  var val = $ele.find('input').val()
+  if (val) {
+    val = val.trim().replace(/\s+/, '+')
+    window.open('https://www.google.com/search?hl=zh-CN&q=site:www.liushuang.info+' + val)
+  }
 }
