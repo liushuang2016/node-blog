@@ -336,7 +336,10 @@ pre {
   .post-info {
     float: none;
     clear: both;
-    padding-top: 4px;
+    padding-top: 8px;
+  }
+  .post-meta {
+    margin-bottom: 12px;
   }
 }
 
