@@ -20,6 +20,10 @@
   <link rel="stylesheet" href="<%- cdnUrl %>/css/github-markdown.css">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="<%- cdnUrl %>/css/iconfont/iconfont.css">
+  <!-- 预加载 -->
+  <link rel="preload" href="<%- cdnUrl %>/img/site/post-bg.svg" as="image">
+  <link rel="preload" href="<%- cdnUrl %>/img/site/bg4-s.jpg" as="image">
+
   <script src="<%- cdnUrl %>/lib/jquery-1.12.4.min.js"></script>
   <script src="<%- cdnUrl %>/lib/highlight.min.js"></script>
   <script src="/js/main.js"></script>
@@ -40,9 +44,6 @@
 </head>
 
 <body>
-  <!-- 预加载 -->
-  <img src="<%- cdnUrl %>/img/site/post-bg.svg" class="hidden">
-  <img src="<%- cdnUrl %>/img/site/bg4-s.jpg" class="hidden">
   <!--[if lt IE 10]>
   <div class="alert-danger" role="alert">
     你的浏览器实在太旧了，请升级你的浏览器
