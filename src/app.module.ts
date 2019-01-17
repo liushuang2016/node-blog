@@ -11,24 +11,28 @@ import { TagService } from './common/service/tag.service';
 import { AdminModule } from './admin/admin.module';
 import { MongooseModule } from "@nestjs/mongoose";
 import * as config from "config";
+import { InfoService } from './common/service/info.service';
+import { InfoSchema } from './model/Info';
 
 @Global()
 @Module({
   imports: [
     MongooseModule.forRoot(config.get('mongodb'), {
       useNewUrlParser: true,
-      useCreateIndex: true
+      useCreateIndex: true,
+      useFindAndModify: false
     }),
     MongooseModule.forFeature([
       { name: 'post', schema: PostSchema },
       { name: 'comment', schema: CommentSchema },
       { name: 'tag', schema: TagSchema },
-      { name: 'user', schema: UserSchema }
+      { name: 'user', schema: UserSchema },
+      { name: 'info', schema: InfoSchema }
     ]),
     BlogModule,
     AdminModule
   ],
-  providers: [PostService, CommentService, TagService, UserService],
-  exports: [PostService, CommentService, TagService, UserService]
+  providers: [PostService, CommentService, TagService, UserService, InfoService],
+  exports: [PostService, CommentService, TagService, UserService, InfoService]
 })
 export class AppModule { }

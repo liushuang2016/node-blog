@@ -539,3 +539,12 @@ pre {
 .end {
   margin-top: 16px;
 }
+
+/*-- footer --*/
+.g-footer {
+  min-height: 40px;
+  padding: 12px 0;
+  border-top: 1px solid #e7eaf1;
+  background-color: #f7f8fa;
+  text-align: center;
+}

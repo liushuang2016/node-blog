@@ -3,6 +3,7 @@ $(function () {
   var commentsContent = $('#comments-content')
   var $search = $('#search')
 
+  addpv()
   // 设置目录 scroll 事件监听
   setDirPosition(postDir)
   // 设置 回复 功能
@@ -12,6 +13,10 @@ $(function () {
   // highlight.js
   highlight(commentsContent)
 })
+
+function addpv() {
+  $.get('/info/addpv', function () { })
+}
 
 function highlight($ele) {
   if (!$ele) {

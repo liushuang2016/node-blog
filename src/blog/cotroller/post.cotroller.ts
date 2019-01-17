@@ -1,3 +1,5 @@
+import { ResJson } from './../../admin/dto/res.dto';
+import { InfoService } from './../../common/service/info.service';
 import { BlogExceptionFilter } from './../filter/blog-exception.filter';
 import { Controller, Get, Res, Render, Param, Req, Query, NotFoundException, BadRequestException, UseFilters } from "@nestjs/common";
 import { Response, Request } from "express";
@@ -8,7 +10,8 @@ import { CommentService } from "../../common/service/comment.service";
 export class PostController {
   constructor(
     private readonly postService: PostService,
-    private readonly commentService: CommentService
+    private readonly commentService: CommentService,
+    private readonly infoService: InfoService,
   ) { }
 
   // 首页
@@ -29,7 +32,8 @@ export class PostController {
     const pageCount = Math.ceil(
       postsCount / this.postService.postSize
     )
-    return { posts, pageCount, page }
+    const pv = await this.infoService.findPv()
+    return { posts, pageCount, page, pv }
   }
 
   // 文章详情
@@ -57,6 +61,17 @@ export class PostController {
       }
     } catch (e) {
       throw new BadRequestException(e.message)
+    }
+  }
+
+  // pv增加
+  @Get('/info/addpv')
+  async addPv(@Res() res: Response) {
+    try {
+      await this.infoService.addPv()
+      res.json(new ResJson({}))
+    } catch (error) {
+      res.json(new ResJson({ code: 500 }))
     }
   }
 }
