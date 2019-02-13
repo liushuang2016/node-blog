@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>刘燕洪/UI设计</title>
+  <link rel="icon" href="./favicon.ico" mce_href="./favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="./favicon.ico" mce_href="./favicon.ico" type="image/x-icon">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      position: relative;
+      padding: 35px;
+      text-align: center;
+      background-color: #f1a9a8;
+    }
+
+    header h1 {
+      margin-bottom: 25px;
+      font-size: 50px;
+      color: #222;
+      font-weight: normal;
+    }
+
+    header h2 {
+      font-size: 14px;
+      font-weight: normal;
+      color: #222;
+    }
+
+    header .search {
+      margin: 50px auto;
+      width: 100%;
+      max-width: 540px;
+      padding: 2px;
+      background-color: rgba(255, 255, 255, .3);
+      border: 1px solid #222;
+      text-align: left;
+    }
+
+    header input {
+      width: 60%;
+      border: none;
+      padding: 12px 0 12px 15px;
+      line-height: 23px;
+      font: normal 18px arial, sans-serif;
+      outline: none;
+      background-color: transparent;
+    }
+
+    header button {
+      float: right;
+      width: 60px;
+      height: 45px;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      background-image: url('./搜索.png');
+      background-repeat: no-repeat;
+      background-position: 12px 5px;
+    }
+
+    main {
+      margin-top: 60px;
+      padding: 22px 20px;
+      background-color: #f7f8fa;
+    }
+
+    main::after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+
+    main figure {
+      float: left;
+      box-sizing: border-box;
+      padding: 5px;
+    }
+
+    main img {
+      height: 100%;
+      width: 100%;
+    }
+
+    .loading {
+      height: 30px;
+      text-align: center;
+      color: #666;
+    }
+
+    .info {
+      margin: 20px auto;
+      width: 100%;
+      max-width: 992px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+    }
+
+    .infoItem {
+      width: 150px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #222;
+    }
+
+    @media (max-width: 600px) {
+      .info {
+        display: block;
+      }
+
+      .infoItem {
+        margin: 10px auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>刘燕洪/UI设计</h1>
+    <h2>做一个有独到见解的设计师是我的原则，同时也非常注重自身专业领域的技能投资，学习新的技能，坚持知识更新是我工作以来逐渐养成的习惯。</h2>
+    <div class="info">
+      <div class="infoItem">
+        <img src="https://blog-1253581643.file.myqcloud.com/img/resume/nowCity.svg" alt="居住地" title="居住地">
+        <p>四川 · 成都</p>
+      </div>
+      <div class="infoItem">
+        <img src="https://blog-1253581643.file.myqcloud.com/img/resume/email.svg" alt="邮箱" title="邮箱">
+        <p>877484113@qq.com</p>
+      </div>
+      <div class="infoItem">
+        <img src="https://blog-1253581643.file.myqcloud.com/img/resume/phone.svg" alt="手机号" title="手机号">
+        <p>+86 15680571762</p>
+      </div>
+    </div>
+  </header>
+  <main>
+
+  </main>
+  <!-- <div class="loading">loading...</div> -->
+
+  <script>
+
+    function ImgEngine() {
+      this.init()
+      this.getData(this.q, function (data, self) {
+        self.render(data, self)
+      })
+      this.bind()
+      // this.lazyLoading()
+    }
+    // 初始化需要调用的参数
+    ImgEngine.prototype.init = function () {
+      this.colWidth = 0
+      this.colList = []
+      this.q
+      this.textBox = document.querySelector('#query')
+      this.load = document.querySelector('.loading')
+      this.main = document.querySelector('main')
+      this.search = document.querySelector('#search')
+      this.mainWidth = parseInt(window.getComputedStyle(this.main).width)
+      this.page = 1
+      this.timmer
+      this.timmer2
+    }
+    // 获取数据
+    ImgEngine.prototype.getData = function (query, callback) {
+      const arr = []
+      callback(arr, this)
+    }
+    // 计算布局数据
+    ImgEngine.prototype.render = function (data, self) {
+      data.forEach(function (x) {
+        x.setHeight = 240
+        x.setWidth = (x.webformatWidth / x.webformatHeight) * x.setHeight
+        if (x.setWidth + self.colWidth > self.mainWidth) {
+          self.layout(self.colList, self.colWidth)
+          self.colList = []
+          self.colList.push(x)
+          self.colWidth = x.setWidth
+        } else {
+          self.colList.push(x)
+          self.colWidth += x.setWidth
+        }
+      })
+      if (self.colList.length > 0) {
+        if (self.colList.length === 1) {
+          self.colList[1] = data[0]
+          self.colWidth += data[0].setWidth
+        }
+        self.layout(self.colList, self.colWidth)
+        self.colWidth = 0
+        self.colList = []
+      }
+    }
+    // 页面布局
+    ImgEngine.prototype.layout = function (colList, colWidth) {
+      var self = this
+      colList.forEach(function (x) {
+        var figure = document.createElement('figure')
+        var img = document.createElement('img')
+        img.src = x.webformatURL
+        figure.appendChild(img)
+        // 不开开发者工具获取的mainWidth比打开多了17px，不知道为什么？？
+        fHeight = ((self.mainWidth - 17) / colWidth) * x.setHeight
+        figure.style.height = fHeight + 'px'
+        figure.style.width = (x.webformatWidth / x.webformatHeight) * fHeight + 'px'
+        self.main.appendChild(figure)
+      })
+    }
+    ImgEngine.prototype.isVisible = function () {
+      var scrollTop = document.body.scrollTop
+      var windowVisible = scrollTop + window.screen.availHeight
+      var boxOffset = document.querySelector('.loading').offsetTop
+      if (boxOffset <= windowVisible && boxOffset > 1000) {
+        return true
+      }
+      return false
+    }
+
+    ImgEngine.prototype.bind = function () {
+      var self = this
+      // 点击查询按钮
+      // this.search.addEventListener('click', function () {
+      //   self.queryData()
+      // })
+      // this.textBox.addEventListener('keydown', function (e) {
+      //   if (e.keyCode == 13) {
+      //     self.queryData()
+      //   }
+      // })
+      // 改变大小刷新页面
+      if (!this.IsPC()) return
+      var self = this
+      window.onresize = function () {
+        if (self.timmer2) {
+          clearTimeout(self.timmer2)
+        }
+        self.timmer2 = setTimeout(function () {
+          location.reload()
+        }, 80)
+      }
+    }
+
+    ImgEngine.prototype.queryData = function () {
+      var self = this
+      q = document.querySelector('#query').value
+      if (q) {
+        self.page = 1
+        self.main.innerHTML = ''
+        self.getData(q, function (data, self) {
+          self.render(data, self)
+        })
+      } else {
+        alert('查询为空！')
+      }
+    }
+    // 懒加载
+    ImgEngine.prototype.lazyLoading = function () {
+      var self = this
+      window.onscroll = function () {
+        if (self.timmer) {
+          clearTimeout(self.timmer)
+        }
+        self.timmer = setTimeout(function () {
+          if (self.isVisible()) {
+            q = document.querySelector('#query').value
+            self.getData(q, function (data, self) {
+              self.render(data, self)
+            })
+          }
+        }, 30)
+      }
+    }
+    // 判断是否为PC
+    ImgEngine.prototype.IsPC = function () {
+      var userAgentInfo = navigator.userAgent;
+      var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
+      var flag = true;
+      for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }
+      }
+      return flag;
+    }
+
+    var p1 = new ImgEngine()
+  </script>
+</body>
+
+</html>
