@@ -30,6 +30,13 @@
     }
 
     header h2 {
+      font-size: 32px;
+      font-weight: normal;
+      color: #222;
+      margin-top: 28px;
+    }
+
+    header h3 {
       font-size: 14px;
       font-weight: normal;
       color: #222;
@@ -114,13 +121,36 @@
       color: #222;
     }
 
+    .info2 {
+      max-width: 400px;
+    }
+
+    .item2 {
+      width: 40px;
+    }
+
+    .item2 img {
+      width: 100%;
+    }
+
     @media (max-width: 600px) {
       .info {
         display: block;
       }
 
+      .info2 {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
       .infoItem {
         margin: 10px auto;
+      }
+    }
+
+    @media (max-width: 375px) {
+      .item2 {
+        width: 30px;
       }
     }
   </style>
@@ -129,7 +159,7 @@
 <body>
   <header>
     <h1>刘燕洪/UI设计</h1>
-    <h2>做一个有独到见解的设计师是我的原则，同时也非常注重自身专业领域的技能投资，学习新的技能，坚持知识更新是我工作以来逐渐养成的习惯。</h2>
+    <h3>注重自身专业领域的技能投资，学习新的技能，坚持知识更新。</h3>
     <div class="info">
       <div class="infoItem">
         <img src="https://blog-1253581643.file.myqcloud.com/img/resume/nowCity.svg" alt="居住地" title="居住地">
@@ -142,6 +172,27 @@
       <div class="infoItem">
         <img src="https://blog-1253581643.file.myqcloud.com/img/resume/phone.svg" alt="手机号" title="手机号">
         <p>+86 15680571762</p>
+      </div>
+    </div>
+    <h2>专业技能</h2>
+    <div class="info info2">
+      <div class="infoItem item2">
+        <img src="https://blog-1253581643.file.myqcloud.com/img/lyh/skill/ae.png">
+      </div>
+      <div class="infoItem item2">
+        <img src="https://blog-1253581643.file.myqcloud.com/img/lyh/skill/ai.png">
+      </div>
+      <div class="infoItem item2">
+        <img src="https://blog-1253581643.file.myqcloud.com/img/lyh/skill/axure.png">
+      </div>
+      <div class="infoItem item2">
+        <img src="https://blog-1253581643.file.myqcloud.com/img/lyh/skill/fl.png">
+      </div>
+      <div class="infoItem item2">
+        <img src="https://blog-1253581643.file.myqcloud.com/img/lyh/skill/ps.png">
+      </div>
+      <div class="infoItem item2">
+        <img src="https://blog-1253581643.file.myqcloud.com/img/lyh/skill/xmind.png">
       </div>
     </div>
   </header>
