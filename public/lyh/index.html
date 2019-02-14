@@ -163,15 +163,17 @@
     .tu {
       box-sizing: border-box;
       width: 50%;
-      height: 300px;
+      height: 280px;
       padding: 8px;
     }
 
     .tu a {
       display: block;
       height: 100%;
-      background-size: cover;
+      background-size: 100% auto;
+      background-position: center;
       background-repeat: no-repeat;
+      background-color: #fce94d;
     }
 
     @media (max-width: 768px) {
@@ -248,8 +250,8 @@
     ImgEngine.prototype.render = function () {
       var s = (this.page - 1) * this.pageSize
       var e = this.page * this.pageSize
-      if (s <= 0) {
-        s = 1
+      if (s <= 1) {
+        s = 2
       }
       if (e >= this.max) {
         e = this.max + 1
@@ -257,7 +259,7 @@
       }
       for (var i = s; i < e; i++) {
         var h = 'https://blog-1253581643.file.myqcloud.com/img/lyh/' + i + '.jpg'
-        var d = '<div class="tu"><a target="_blank" href="' + h + '" style="background-image:url(' + h + ')"></a></div>'
+        var d = '<div class="tu"><a title="点击查看原图" target="_blank" href="' + h + '" style="background-image:url(' + h + ')"></a></div>'
         this.main.append(d)
       }
     }
