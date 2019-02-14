@@ -170,7 +170,7 @@
     .tu a {
       display: block;
       height: 100%;
-      background-size: 100% auto;
+      background-size: cover;
       background-position: center top;
       background-repeat: no-repeat;
       background-color: #fce94d;
@@ -242,7 +242,7 @@
       this.mainWidth = parseInt(this.main.width())
       this.page = 1
       this.pageSize = 10
-      this.max = 35
+      this.max = 37
       this.timmer
       this.timmer2
     }
@@ -250,8 +250,8 @@
     ImgEngine.prototype.render = function () {
       var s = (this.page - 1) * this.pageSize
       var e = this.page * this.pageSize
-      if (s <= 1) {
-        s = 2
+      if (s <= 0) {
+        s = 1
       }
       if (e >= this.max) {
         e = this.max + 1
