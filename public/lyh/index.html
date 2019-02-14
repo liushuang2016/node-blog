@@ -9,6 +9,7 @@
   <title>刘燕洪/UI设计</title>
   <link rel="icon" href="./favicon.ico" mce_href="./favicon.ico" type="image/x-icon">
   <link rel="shortcut icon" href="./favicon.ico" mce_href="./favicon.ico" type="image/x-icon">
+  <script src="https://blog-1253581643.file.myqcloud.com/lib/jquery-1.12.4.min.js"></script>
   <style>
     * {
       margin: 0;
@@ -153,6 +154,25 @@
         width: 30px;
       }
     }
+
+    #body {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .tu {
+      box-sizing: border-box;
+      width: 50%;
+      height: 300px;
+      padding: 8px;
+    }
+
+    .tu a {
+      display: block;
+      height: 100%;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
   </style>
 </head>
 
@@ -196,82 +216,48 @@
       </div>
     </div>
   </header>
-  <main>
+  <main id="body">
 
   </main>
-  <!-- <div class="loading">loading...</div> -->
+  <div class="loading">loading...</div>
 
   <script>
-
     function ImgEngine() {
       this.init()
-      this.getData(this.q, function (data, self) {
-        self.render(data, self)
-      })
-      this.bind()
-      // this.lazyLoading()
+      this.render()
+      this.lazyLoading()
     }
-    // 初始化需要调用的参数
+
     ImgEngine.prototype.init = function () {
-      this.colWidth = 0
-      this.colList = []
-      this.q
-      this.textBox = document.querySelector('#query')
-      this.load = document.querySelector('.loading')
-      this.main = document.querySelector('main')
-      this.search = document.querySelector('#search')
-      this.mainWidth = parseInt(window.getComputedStyle(this.main).width)
+      this.load = $('.loading')
+      this.main = $('#body')
+      this.mainWidth = parseInt(this.main.width())
       this.page = 1
+      this.pageSize = 10
+      this.max = 35
       this.timmer
       this.timmer2
     }
-    // 获取数据
-    ImgEngine.prototype.getData = function (query, callback) {
-      const arr = []
-      callback(arr, this)
-    }
-    // 计算布局数据
-    ImgEngine.prototype.render = function (data, self) {
-      data.forEach(function (x) {
-        x.setHeight = 240
-        x.setWidth = (x.webformatWidth / x.webformatHeight) * x.setHeight
-        if (x.setWidth + self.colWidth > self.mainWidth) {
-          self.layout(self.colList, self.colWidth)
-          self.colList = []
-          self.colList.push(x)
-          self.colWidth = x.setWidth
-        } else {
-          self.colList.push(x)
-          self.colWidth += x.setWidth
-        }
-      })
-      if (self.colList.length > 0) {
-        if (self.colList.length === 1) {
-          self.colList[1] = data[0]
-          self.colWidth += data[0].setWidth
-        }
-        self.layout(self.colList, self.colWidth)
-        self.colWidth = 0
-        self.colList = []
+
+    ImgEngine.prototype.render = function () {
+      var s = (this.page - 1) * this.pageSize
+      var e = this.page * this.pageSize
+      if (s <= 0) {
+        s = 1
+      }
+      if (e >= this.max) {
+        e = this.max + 1
+        this.load.hide()
+      }
+      for (var i = s; i < e; i++) {
+        var h = 'https://blog-1253581643.file.myqcloud.com/img/lyh/' + i + '.jpg'
+        var d = '<div class="tu"><a target="_blank" href="' + h + '" style="background-image:url(' + h + ')"></a></div>'
+        this.main.append(d)
       }
     }
-    // 页面布局
-    ImgEngine.prototype.layout = function (colList, colWidth) {
-      var self = this
-      colList.forEach(function (x) {
-        var figure = document.createElement('figure')
-        var img = document.createElement('img')
-        img.src = x.webformatURL
-        figure.appendChild(img)
-        // 不开开发者工具获取的mainWidth比打开多了17px，不知道为什么？？
-        fHeight = ((self.mainWidth - 17) / colWidth) * x.setHeight
-        figure.style.height = fHeight + 'px'
-        figure.style.width = (x.webformatWidth / x.webformatHeight) * fHeight + 'px'
-        self.main.appendChild(figure)
-      })
-    }
+
     ImgEngine.prototype.isVisible = function () {
-      var scrollTop = document.body.scrollTop
+      var scrollTop = $(document).scrollTop()
       var windowVisible = scrollTop + window.screen.availHeight
       var boxOffset = document.querySelector('.loading').offsetTop
       if (boxOffset <= windowVisible && boxOffset > 1000) {
@@ -280,69 +266,25 @@
       return false
     }
 
-    ImgEngine.prototype.bind = function () {
-      var self = this
-      // 点击查询按钮
-      // this.search.addEventListener('click', function () {
-      //   self.queryData()
-      // })
-      // this.textBox.addEventListener('keydown', function (e) {
-      //   if (e.keyCode == 13) {
-      //     self.queryData()
-      //   }
-      // })
-      // 改变大小刷新页面
-      if (!this.IsPC()) return
-      var self = this
-      window.onresize = function () {
-        if (self.timmer2) {
-          clearTimeout(self.timmer2)
-        }
-        self.timmer2 = setTimeout(function () {
-          location.reload()
-        }, 80)
-      }
-    }
-
-    ImgEngine.prototype.queryData = function () {
-      var self = this
-      q = document.querySelector('#query').value
-      if (q) {
-        self.page = 1
-        self.main.innerHTML = ''
-        self.getData(q, function (data, self) {
-          self.render(data, self)
-        })
-      } else {
-        alert('查询为空！')
-      }
-    }
     // 懒加载
     ImgEngine.prototype.lazyLoading = function () {
       var self = this
       window.onscroll = function () {
+        // 如果没有图片，则停止加载
+        if (self.page * self.pageSize >= self.max) {
+          return
+        }
+
         if (self.timmer) {
           clearTimeout(self.timmer)
         }
         self.timmer = setTimeout(function () {
           if (self.isVisible()) {
-            q = document.querySelector('#query').value
-            self.getData(q, function (data, self) {
-              self.render(data, self)
-            })
+            self.page += 1
+            self.render()
           }
         }, 30)
       }
-    }
-    // 判断是否为PC
-    ImgEngine.prototype.IsPC = function () {
-      var userAgentInfo = navigator.userAgent;
-      var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
-      var flag = true;
-      for (var v = 0; v < Agents.length; v++) {
-        if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }
-      }
-      return flag;
     }
 
     var p1 = new ImgEngine()
